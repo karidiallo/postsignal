@@ -8,6 +8,7 @@
 export const TABS=[['all','Wszystko'],['reels','Reels'],['ads','Reklamy'],['ugc','UGC']];
 export const TAGNAME={reels:'Reel',ads:'Reklama',ugc:'UGC'};
 export const ITEMS=[
+ {title:'POP2UP',brand:'PostSignal',tag:'ads',desc:'Brief: dodać opis case study. Wpisz tu, co było celem i co zrobiłaś.',result:'Dodaj wynik',poster:'',preview:'assets/work/pop2up.mp4',video:'assets/work/pop2up.mp4'},
  {title:'Launch kampanii',brand:'Marka A',tag:'ads',desc:'Brief: wejście nowego produktu na rynek. 6 wariantów hooków pod Meta Ads, zwycięzca wybrany po 72h testów.',result:'CTR +42% · CPA −31%',poster:'',preview:'',video:''},
  {title:'Reel produktowy',brand:'Marka B',tag:'reels',desc:'Brief: pokazać produkt w 20 sekund bez lektora. Mocne ujęcie otwierające, napisy w rytmie muzyki, CTA w ostatniej sekundzie.',result:'1,2 mln wyświetleń',poster:'',preview:'',video:''},
  {title:'Unboxing UGC',brand:'Marka C',tag:'ugc',desc:'Brief: autentyczny materiał do reklam. Naturalne światło i telefon, a efekt jak od prawdziwego klienta.',result:'Hook rate 38%',poster:'',preview:'',video:''},
