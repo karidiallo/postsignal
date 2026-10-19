@@ -1,6 +1,6 @@
 import {ITEMS} from './data.js';
 import {createWorld} from './scene.js';
-import {initTabs,setCaption,initModal,initCursor,initForm} from './ui.js';
+import {initTabs,setCaption,initModal,initCursor,initForm,initToTop} from './ui.js';
 
 const $=s=>document.querySelector(s);
 
@@ -26,7 +26,7 @@ function sync(){
   document.body.classList.toggle('end',end);$('#cta').classList.toggle('in',end);
   world.setProgress(p,hero);
 }
-initForm();
+initForm();initToTop();
 initTabs(k=>{world.setFilter(k);scrollTo({top:0,behavior:'smooth'});sync()});
 addEventListener('scroll',sync,{passive:true});addEventListener('resize',sync);
 sync();
