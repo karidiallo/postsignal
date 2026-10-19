@@ -29,23 +29,17 @@ export function createWorld(canvas,items,hooks){
 
   const cards=items.map((it,i)=>{
     const mat=new THREE.MeshBasicMaterial({transparent:true,opacity:0,alphaMap:alphaTex,side:THREE.DoubleSide,depthWrite:false});
-    mat.map=placeholder(i,it);let video=null;
+    mat.map=placeholder(i,it);let video=null,u_failed=false;
     if(it.preview){
       video=Object.assign(document.createElement('video'),{src:it.preview,muted:true,loop:true,playsInline:true,crossOrigin:'anonymous'});
       const vt=new THREE.VideoTexture(video);vt.colorSpace=THREE.SRGBColorSpace;mat.map=vt;
+      video.addEventListener('error',()=>{u_failed=true;mat.map=placeholder(i,it);mat.needsUpdate=true;if(it.poster)loader.load(it.poster,t=>{t.colorSpace=THREE.SRGBColorSpace;mat.map=t;mat.needsUpdate=true})});
     }else if(it.poster)loader.load(it.poster,t=>{t.colorSpace=THREE.SRGBColorSpace;mat.map=t;mat.needsUpdate=true});
     const m=new THREE.Mesh(geo,mat);
     const sh=new THREE.Mesh(shGeo,new THREE.MeshBasicMaterial({map:shadowTex,transparent:true,opacity:0,depthWrite:false}));
     sh.position.set(0,-.18,-.03);m.add(sh);
     m.userData={it,sh,video,tp:new THREE.Vector3(),show:true,sc:1,ph:i*1.9};
     m.position.set(0,0,-i*GAP);m.scale.setScalar(.6);scene.add(m);return m;
-  });
-
-  const bubbles=Array.from({length:18},()=>{
-    const r=.35+Math.random()*1.3;
-    const b=new THREE.Mesh(new THREE.RingGeometry(r,r+.03+Math.random()*.03,72),new THREE.MeshBasicMaterial({color:0xf0e3bd,transparent:true,opacity:0,depthWrite:false}));
-    b.userData={bx:(Math.random()-.5)*15,by:(Math.random()-.5)*8,sp:.15+Math.random()*.25,ph:Math.random()*6,u:Math.random(),bo:.14+Math.random()*.2};
-    scene.add(b);return b;
   });
 
   let vis=[],filter='all',camZ=START,tz=START,endZ=START,progress=0,inHero=true,mx=0,my=0,sx=0,sy=0,hov=null,last=null;
@@ -58,7 +52,6 @@ export function createWorld(canvas,items,hooks){
       if(i===0){u.tp.set(off*1.15,-.1,1.5);u.sc=1.1}
       else{u.tp.set(Math.cos(i*1.05)*off,Math.sin(i*1.05+1)*.7,-i*GAP);u.sc=.92+((i*37)%5)*.045}});
     endZ=vis.length?-(vis.length-1)*GAP+7:START;
-    bubbles.forEach(b=>b.position.z=START+3-b.userData.u*(START+3-endZ+8));
     tz=START+(endZ-START)*progress;
   }
   function resize(){renderer.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.fov=cam.aspect<.8?70:55;cam.updateProjectionMatrix();layout()}
@@ -94,9 +87,6 @@ export function createWorld(canvas,items,hooks){
       if(u.video){const on=m.material.opacity>.3;if(on&&u.video.paused)u.video.play().catch(()=>{});else if(!on&&!u.video.paused)u.video.pause()}
       if(s){const d=Math.abs(camZ-8-m.position.z);if(d<nd){nd=d;near=m}}
     });
-    bubbles.forEach(b=>{const u=b.userData;
-      b.position.x=u.bx+Math.cos(t*u.sp+u.ph)*.6;b.position.y=u.by+Math.sin(t*u.sp*1.3+u.ph)*.9;
-      b.material.opacity=u.bo*cl((camZ-b.position.z-1)/2,0,1);b.lookAt(cam.position)});
     const n=!inHero&&near?near:null;
     if(n!==last){last=n;hooks.onNear(n?n.userData.it:null)}
     renderer.render(scene,cam);requestAnimationFrame(tick);
