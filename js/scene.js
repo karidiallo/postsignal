@@ -17,8 +17,6 @@ function placeholder(i,it){
     const g=x.createLinearGradient(0,0,w,h);
     if(i%2===0){g.addColorStop(0,'#1f5c3f');g.addColorStop(1,'#06120c')}else{g.addColorStop(0,'#dcc48c');g.addColorStop(1,'#2a2112')}
     x.fillStyle=g;x.fillRect(0,0,w,h);
-    x.fillStyle='rgba(255,255,255,.92)';x.font='800 150px "Arial Black",Arial';x.fillText(String(i+1).padStart(2,'0'),30,h-(hz?40:84));
-    x.font='700 22px Arial';x.fillText(TAGNAME[it.tag].toUpperCase(),34,64);
   });
 }
 
@@ -38,13 +36,14 @@ export function createWorld(canvas,items,hooks){
     if(it.preview){
       video=Object.assign(document.createElement('video'),{muted:true,loop:true,playsInline:true,preload:'none'});
       const vt=new THREE.VideoTexture(video);vt.colorSpace=THREE.SRGBColorSpace;vt.generateMipmaps=false;vt.minFilter=THREE.LinearFilter;
-      video.addEventListener('playing',()=>{mat.map=vt;mat.needsUpdate=true},{once:true});
-      video.addEventListener('error',()=>{if(it.video&&/\.mp4$/i.test(it.video)&&!video.dataset.fb){video.dataset.fb=1;video.src=it.video;video.play().catch(()=>{})}});
+      const u0=()=>m.userData;
+      video.addEventListener('playing',()=>{mat.map=vt;mat.needsUpdate=true;u0().ready=true},{once:true});
+      video.addEventListener('error',()=>{if(it.video&&/\.mp4$/i.test(it.video)&&!video.dataset.fb){video.dataset.fb=1;video.src=it.video;video.play().catch(()=>{})}else u0().ready=true});
     }
     const m=new THREE.Mesh(G[k],mat);
     const sh=new THREE.Mesh(SG[k],new THREE.MeshBasicMaterial({map:SHADOW[k],transparent:true,opacity:0,depthWrite:false}));
     sh.position.set(0,-.18,-.03);m.add(sh);
-    m.userData={it,sh,video,loaded:false,tp:new THREE.Vector3(),show:true,sc:1,ph:i*1.9};
+    m.userData={it,sh,video,ready:!it.preview||!!it.poster,loaded:false,tp:new THREE.Vector3(),show:true,sc:1,ph:i*1.9};
     m.position.set(0,0,-i*GAP);m.scale.setScalar(.6);scene.add(m);return m;
   });
 
@@ -93,12 +92,13 @@ export function createWorld(canvas,items,hooks){
       m.rotation.z=L(m.rotation.z,s?-u.tp.x*.04+Math.sin(t*.6+u.ph)*.03:0,.09);
       m.scale.setScalar(L(m.scale.x,s?u.sc*(m===hov?1.06:1):.5,.12));
       const a=cl((dist-1)/2.5,0,1)*cl(1-(dist-16)/10,0,1);
-      m.material.opacity=L(m.material.opacity,s?a:0,.12);
+      m.material.opacity=L(m.material.opacity,s&&u.ready?a:0,.12);
       u.sh.material.opacity=m.material.opacity*.55;
       m.visible=m.material.opacity>.01;
       if(u.video){
-        const on=s&&dist>1&&dist<12;   /* gra tylko karta w zasięgu kamery */
-        if(on){if(!u.loaded){u.loaded=true;u.video.src=u.it.preview;u.video.load()}if(u.video.paused)u.video.play().catch(()=>{})}
+        const pre=s&&dist>1&&dist<26,on=s&&dist>1&&dist<14;   /* ładuje z wyprzedzeniem, gra tylko w zasięgu kamery */
+        if(pre&&!u.loaded){u.loaded=true;u.video.src=u.it.preview;u.video.load()}
+        if(on){if(u.video.paused)u.video.play().catch(()=>{})}
         else if(!u.video.paused)u.video.pause();
       }
       if(s){const d=Math.abs(dist-8);if(d<nd){nd=d;near=m}}
