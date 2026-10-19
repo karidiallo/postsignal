@@ -1,6 +1,6 @@
 import {ITEMS} from './data.js';
 import {createWorld} from './scene.js';
-import {initTabs,setCaption,initModal,initCursor,initForm,initToTop,initTalk,trackCaption} from './ui.js';
+import {initTabs,setCaption,initModal,initCursor,initForm,initToTop,initTalk,trackCaption,setTotal} from './ui.js';
 
 const $=s=>document.querySelector(s);
 
@@ -13,6 +13,7 @@ document.addEventListener('visibilitychange',playBg);
 addEventListener('scroll',playBg,{passive:true});
 addEventListener('pointerdown',playBg,{once:true});
 
+ITEMS.forEach((it,i)=>{it._i=i});setTotal(ITEMS.length);
 const openModal=initModal(),cursorBig=initCursor();
 const world=createWorld($('#gl'),ITEMS,{onPick:openModal,onHover:cursorBig,onNear:setCaption,onTrack:trackCaption});
 
