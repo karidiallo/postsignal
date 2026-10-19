@@ -1,4 +1,4 @@
-import {TABS,TAGNAME} from './data.js';
+import {TABS,TAGNAME,FORM_ENDPOINT,MAIL} from './data.js';
 const $=s=>document.querySelector(s);
 
 export function initTabs(onChange){
@@ -37,4 +37,33 @@ export function initCursor(){
   addEventListener('mousemove',e=>{x=e.clientX;y=e.clientY});
   (function loop(){cx+=(x-cx)*.2;cy+=(y-cy)*.2;c.style.transform=`translate(${cx}px,${cy}px)`;requestAnimationFrame(loop)})();
   return on=>c.classList.toggle('big',on);
+}
+
+export function initForm(){
+  const f=$('#form'),st=$('#fstatus'),btn=f.querySelector('button');
+  f.addEventListener('submit',async e=>{
+    e.preventDefault();
+    if(f.elements._hp.value)return;
+    const name=f.elements.name,email=f.elements.email;
+    [name,email].forEach(i=>i.classList.remove('invalid'));
+    let bad=false;
+    if(!name.value.trim()){name.classList.add('invalid');bad=true}
+    if(!/^\S+@\S+\.\S+$/.test(email.value.trim())){email.classList.add('invalid');bad=true}
+    if(bad){st.textContent='Uzupełnij imię i poprawny e-mail.';return}
+    const topics=[...f.querySelectorAll('[name=topic]:checked')].map(i=>i.value).join(', ');
+    const data={name:name.value.trim(),email:email.value.trim(),brand:f.elements.brand.value.trim(),topics,message:f.elements.msg.value.trim()};
+    if(FORM_ENDPOINT){
+      btn.disabled=true;st.textContent='Wysyłam…';
+      try{
+        const r=await fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)});
+        if(!r.ok)throw 0;
+        f.reset();st.textContent='Dzięki! Odezwiemy się najszybciej, jak to możliwe.';
+      }catch{st.textContent='Nie udało się wysłać. Napisz do nas na '+MAIL+'.'}
+      btn.disabled=false;
+    }else{
+      const body=`Imię: ${data.name}\nE-mail: ${data.email}\nMarka: ${data.brand}\nTemat: ${topics}\n\n${data.message}`;
+      location.href=`mailto:${MAIL}?subject=${encodeURIComponent('Zapytanie z portfolio: '+(data.brand||data.name))}&body=${encodeURIComponent(body)}`;
+      st.textContent='Otwieram Twoją pocztę…';
+    }
+  });
 }
