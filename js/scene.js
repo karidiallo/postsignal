@@ -57,11 +57,11 @@ export function createWorld(canvas,items,hooks){
 
   function layout(){
     vis=cards.filter(m=>filter==='all'||m.userData.it.tag===filter);
-    const off=innerWidth/innerHeight<.8?.85:2.7,narrow=off<1;
+    const off=innerWidth/innerHeight<.8?.85:2.4,narrow=off<1;
     cards.forEach(m=>m.userData.show=vis.includes(m));
     vis.forEach((m,i)=>{const u=m.userData,side=i%2===0?1:-1,land=isL(u.it);
-      if(i===0)u.tp.set(off*(land?.95:1.15),-.1,1.5);
-      else u.tp.set(side*off*(land?.95:1),Math.cos(i*1.3)*.45,-i*GAP+(land?1.2:0));
+      if(i===0)u.tp.set(off*(land?.8:1.15),-.1,1.5);
+      else u.tp.set(side*off*(land?.8:1),Math.cos(i*1.3)*.45,-i*GAP+(land?1.2:0));
       if(land)u.sc=narrow?.62:1.12;else if(i>0)u.sc=.95+((i*37)%5)*.04;
       if(narrow&&land)u.tp.x=0;});
     endZ=vis.length?-(vis.length-1)*GAP-2:START;
@@ -110,7 +110,8 @@ export function createWorld(canvas,items,hooks){
     if(n!==last){last=n;hooks.onNear(n?n.userData.it:null,n?Math.sign(n.userData.tp.x):0)}
     if(last&&hooks.onTrack){
       const hw=last.geometry.parameters.width/2*last.scale.x,pr=x=>(new THREE.Vector3(x,last.position.y,last.position.z).project(cam).x*.5+.5)*innerWidth;
-      hooks.onTrack(pr(last.position.x-hw),pr(last.position.x+hw));
+      const cy=(-new THREE.Vector3(last.position.x,last.userData.tp.y,last.position.z).project(cam).y*.5+.5)*innerHeight;
+      hooks.onTrack(pr(last.position.x-hw),pr(last.position.x+hw),cy);
     }
     renderer.render(scene,cam);requestAnimationFrame(tick);
   }
