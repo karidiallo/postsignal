@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PostSignal – content dla marek</title>
+<meta name="description" content="PostSignal: reelsy, reklamy i UGC dla marek. Portfolio.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<video id="bgv" src="assets/video/bg.mp4" autoplay muted loop playsinline preload="auto"></video>
+<div class="shade"></div>
+<canvas id="gl"></canvas>
+<div id="spacer"></div>
+
+<header class="ui">
+  <img src="assets/img/logo.png" alt="PostSignal">
+  <nav id="tabs" aria-label="Filtr portfolio"></nav>
+</header>
+
+<div id="hero" class="ui">
+  <h1>Reels.<br>Ads.<br><span>UGC.</span></h1>
+  <p>Content dla marek, który zatrzymuje scroll i sprzedaje.</p>
+</div>
+
+<div id="cap" class="ui"><div class="tag" id="c-tag"></div><h2 id="c-title"></h2><p id="c-desc"></p><span class="res" id="c-res"></span></div>
+<div id="cnt" class="ui"><div id="cnt-n"></div><a href="mailto:contact@postsignal.eu">contact@postsignal.eu →</a></div>
+
+<div id="cursor" aria-hidden="true"><span>Play</span></div>
+<div id="modal" role="dialog" aria-modal="true"><div class="box" id="box"></div></div>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
