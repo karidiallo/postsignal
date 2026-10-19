@@ -59,13 +59,11 @@ export function createWorld(canvas,items,hooks){
     vis=cards.filter(m=>filter==='all'||m.userData.it.tag===filter);
     const off=innerWidth/innerHeight<.8?.85:2.7,narrow=off<1;
     cards.forEach(m=>m.userData.show=vis.includes(m));
-    let hc=0;
-    vis.forEach((m,i)=>{const u=m.userData;
-      if(isL(u.it)){
-        const left=hc++%2===0;
-        u.tp.set(narrow?0:(left?-1:1)*off*.95,.05,-i*GAP+1.2);u.sc=narrow?.62:1.12;
-      }else if(i===0){u.tp.set(off*1.15,-.1,1.5);u.sc=1.1}
-      else{u.tp.set(Math.cos(i*1.05)*off,Math.sin(i*1.05+1)*.7,-i*GAP);u.sc=.92+((i*37)%5)*.045}});
+    vis.forEach((m,i)=>{const u=m.userData,side=i%2===0?1:-1,land=isL(u.it);
+      if(i===0)u.tp.set(off*(land?.95:1.15),-.1,1.5);
+      else u.tp.set(side*off*(land?.95:1),Math.cos(i*1.3)*.45,-i*GAP+(land?1.2:0));
+      if(land)u.sc=narrow?.62:1.12;else if(i>0)u.sc=.95+((i*37)%5)*.04;
+      if(narrow&&land)u.tp.x=0;});
     endZ=vis.length?-(vis.length-1)*GAP-2:START;
     tz=START+(endZ-START)*progress;
   }
@@ -96,7 +94,7 @@ export function createWorld(canvas,items,hooks){
       m.rotation.y=L(m.rotation.y,s?-u.tp.x*.1:0,.09);
       m.rotation.z=L(m.rotation.z,s?-u.tp.x*.04+Math.sin(t*.6+u.ph)*.03:0,.09);
       m.scale.setScalar(L(m.scale.x,s?u.sc*(m===hov?1.06:1):.5,.12));
-      const a=cl((dist-1)/2.5,0,1)*cl(1-(dist-16)/10,0,1);
+      const a=cl((dist-1)/2.5,0,1)*cl(1-(dist-8)/3.5,0,1);
       m.material.opacity=L(m.material.opacity,s&&u.ready?a:0,.12);
       u.sh.material.opacity=m.material.opacity*.55;
       m.visible=m.material.opacity>.01;
@@ -109,7 +107,7 @@ export function createWorld(canvas,items,hooks){
       if(s){const d=Math.abs(dist-8);if(d<nd){nd=d;near=m}}
     });
     const n=!inHero&&near?near:null;
-    if(n!==last){last=n;hooks.onNear(n?n.userData.it:null)}
+    if(n!==last){last=n;hooks.onNear(n?n.userData.it:null,n?Math.sign(n.userData.tp.x):0)}
     renderer.render(scene,cam);requestAnimationFrame(tick);
   }
   resize();tick();
