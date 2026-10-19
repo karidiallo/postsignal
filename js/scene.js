@@ -1,19 +1,26 @@
 import * as THREE from 'three';
-import {TAGNAME} from './data.js';
 
-const W=2.25,H=4,HW=5,HH=2.8125,GAP=6,START=8;
+const GAP=6,START=8;
 const L=(a,b,t)=>a+(b-a)*t,cl=(v,a,b)=>Math.min(b,Math.max(a,v));
-const isH=it=>it.tag==='horizontal';
+const ratioOf=it=>{if(it.ratio){const [a,b]=it.ratio.split(':').map(Number);if(a&&b)return a/b}return it.tag==='horizontal'?16/9:9/16};
+const isL=it=>ratioOf(it)>=1;
+const sizeOf=r=>{if(r<1)return[4*r,4];const w=4.4+(r-1.333)*1.4;return[w,w/r]};
 
 function tex(w,h,draw){const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t}
 function rr(x,X,Y,w,h,r){x.beginPath();x.roundRect?x.roundRect(X,Y,w,h,r):x.rect(X,Y,w,h);x.closePath()}
-const mask=(w,h,r)=>tex(w,h,x=>{x.fillStyle='#000';x.fillRect(0,0,w,h);x.fillStyle='#fff';rr(x,0,0,w,h,r);x.fill()});
-const shadow=(w,h,r)=>tex(w,h,(x,w,h)=>{x.shadowColor='rgba(0,0,0,.9)';x.shadowBlur=50;x.fillStyle='#000';rr(x,70,70,w-140,h-140,r);x.fill()});
-const MASK={v:mask(450,800,64),h:mask(800,450,56)},SHADOW={v:shadow(512,768,50),h:shadow(768,512,46)};
 
-function placeholder(i,it){
-  const hz=isH(it);
-  return tex(hz?800:450,hz?450:800,(x,w,h)=>{
+/* zasoby karty zależne od proporcji (cache) */
+const cache={};
+function assets(r){
+  const k=r.toFixed(3);if(cache[k])return cache[k];
+  const [cw,ch]=sizeOf(r),pw=r>=1?800:Math.round(800*r),ph=r>=1?Math.round(800/r):800,rad=Math.min(pw,ph)*.14,pad=Math.round(Math.max(pw,ph)*.11);
+  const mask=tex(pw,ph,x=>{x.fillStyle='#000';x.fillRect(0,0,pw,ph);x.fillStyle='#fff';rr(x,0,0,pw,ph,rad);x.fill()});
+  const sh=tex(pw+pad*2,ph+pad*2,x=>{x.shadowColor='rgba(0,0,0,.9)';x.shadowBlur=pad*.6;x.fillStyle='#000';rr(x,pad,pad,pw,ph,rad);x.fill()});
+  return cache[k]={pw,ph,mask,sh,geo:new THREE.PlaneGeometry(cw,ch),sgeo:new THREE.PlaneGeometry(cw*(pw+pad*2)/pw,ch*(ph+pad*2)/ph)};
+}
+
+function placeholder(i,A){
+  return tex(A.pw,A.ph,(x,w,h)=>{
     const g=x.createLinearGradient(0,0,w,h);
     if(i%2===0){g.addColorStop(0,'#1f5c3f');g.addColorStop(1,'#06120c')}else{g.addColorStop(0,'#dcc48c');g.addColorStop(1,'#2a2112')}
     x.fillStyle=g;x.fillRect(0,0,w,h);
@@ -24,14 +31,12 @@ export function createWorld(canvas,items,hooks){
   const renderer=new THREE.WebGLRenderer({canvas,antialias:false,alpha:true,powerPreference:'high-performance'});
   renderer.setPixelRatio(Math.min(devicePixelRatio,1.25));renderer.setClearColor(0,0);
   const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(55,1,.1,100);
-  const G={v:new THREE.PlaneGeometry(W,H),h:new THREE.PlaneGeometry(HW,HH)};
-  const SG={v:new THREE.PlaneGeometry(W*1.6,H*1.45),h:new THREE.PlaneGeometry(HW*1.3,HH*1.6)};
   const loader=new THREE.TextureLoader();
 
   const cards=items.map((it,i)=>{
-    const k=isH(it)?'h':'v';
-    const mat=new THREE.MeshBasicMaterial({transparent:true,opacity:0,alphaMap:MASK[k],side:THREE.DoubleSide,depthWrite:false});
-    const ph=placeholder(i,it);mat.map=ph;let video=null;
+    const A=assets(ratioOf(it));
+    const mat=new THREE.MeshBasicMaterial({transparent:true,opacity:0,alphaMap:A.mask,side:THREE.DoubleSide,depthWrite:false});
+    const ph=placeholder(i,A);mat.map=ph;let video=null;
     if(it.poster)loader.load(it.poster,t=>{t.colorSpace=THREE.SRGBColorSpace;ph.dispose();mat.map=t;mat.needsUpdate=true});
     if(it.preview){
       video=Object.assign(document.createElement('video'),{muted:true,loop:true,playsInline:true,preload:'none'});
@@ -40,8 +45,8 @@ export function createWorld(canvas,items,hooks){
       video.addEventListener('playing',()=>{mat.map=vt;mat.needsUpdate=true;u0().ready=true},{once:true});
       video.addEventListener('error',()=>{if(it.video&&/\.mp4$/i.test(it.video)&&!video.dataset.fb){video.dataset.fb=1;video.src=it.video;video.play().catch(()=>{})}else u0().ready=true});
     }
-    const m=new THREE.Mesh(G[k],mat);
-    const sh=new THREE.Mesh(SG[k],new THREE.MeshBasicMaterial({map:SHADOW[k],transparent:true,opacity:0,depthWrite:false}));
+    const m=new THREE.Mesh(A.geo,mat);
+    const sh=new THREE.Mesh(A.sgeo,new THREE.MeshBasicMaterial({map:A.sh,transparent:true,opacity:0,depthWrite:false}));
     sh.position.set(0,-.18,-.03);m.add(sh);
     m.userData={it,sh,video,ready:!it.preview||!!it.poster,loaded:false,tp:new THREE.Vector3(),show:true,sc:1,ph:i*1.9};
     m.position.set(0,0,-i*GAP);m.scale.setScalar(.6);scene.add(m);return m;
@@ -56,7 +61,7 @@ export function createWorld(canvas,items,hooks){
     cards.forEach(m=>m.userData.show=vis.includes(m));
     let hc=0;
     vis.forEach((m,i)=>{const u=m.userData;
-      if(isH(u.it)){
+      if(isL(u.it)){
         const left=hc++%2===0;
         u.tp.set(narrow?0:(left?-1:1)*off*.95,.05,-i*GAP+1.2);u.sc=narrow?.62:1.12;
       }else if(i===0){u.tp.set(off*1.15,-.1,1.5);u.sc=1.1}
