@@ -1,4 +1,4 @@
-import {TABS,TAGNAME,FORM_ENDPOINT,MAIL,CAPTION_SIDE} from './config.js';
+import {TABS,TAGNAME,FORM_ENDPOINT,MAIL} from './config.js';
 const $=s=>document.querySelector(s);
 
 export function initTabs(onChange){
@@ -12,11 +12,17 @@ export function setCaption(it,cardSide){
   const c=$('#cap');c.classList.remove('in');clearTimeout(timer);
   if(!it)return;
   timer=setTimeout(()=>{
-    const right=CAPTION_SIDE==='right'||(CAPTION_SIDE==='opposite'&&cardSide<0);
-    c.classList.toggle('right',right);
+    c.classList.toggle('right',cardSide>0);   /* karta po prawej → opis po jej lewej, i odwrotnie */
     $('#c-tag').textContent=TAGNAME[it.tag]+' · '+it.brand;$('#c-title').textContent=it.title;
     $('#c-desc').textContent=it.desc;$('#c-res').textContent=it.result;c.classList.add('in');
   },220);
+}
+
+let pl=-1,pr=-1;
+export function trackCaption(l,r){
+  const c=$('#cap');
+  if(Math.abs(l-pl)>1.5){c.style.setProperty('--cl',l+'px');pl=l}
+  if(Math.abs(r-pr)>1.5){c.style.setProperty('--cr',r+'px');pr=r}
 }
 
 export function initModal(){
@@ -36,7 +42,7 @@ export function initModal(){
 
 export function initCursor(){
   const c=$('#cursor');let x=0,y=0,cx=0,cy=0;
-  addEventListener('mousemove',e=>{x=e.clientX;y=e.clientY});
+  addEventListener('mousemove',e=>{if(!c.classList.contains('on')){cx=x=e.clientX;cy=y=e.clientY;c.classList.add('on')}x=e.clientX;y=e.clientY});
   (function loop(){cx+=(x-cx)*.2;cy+=(y-cy)*.2;c.style.transform=`translate(${cx}px,${cy}px)`;requestAnimationFrame(loop)})();
   return on=>c.classList.toggle('big',on);
 }
