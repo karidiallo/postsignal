@@ -1,4 +1,4 @@
-import {TABS,TAGNAME,FORM_ENDPOINT,MAIL} from './data.js';
+import {TABS,TAGNAME,FORM_ENDPOINT,MAIL,CAPTION_SIDE} from './config.js';
 const $=s=>document.querySelector(s);
 
 export function initTabs(onChange){
@@ -8,10 +8,12 @@ export function initTabs(onChange){
 }
 
 let timer;
-export function setCaption(it){
+export function setCaption(it,cardSide){
   const c=$('#cap');c.classList.remove('in');clearTimeout(timer);
   if(!it)return;
   timer=setTimeout(()=>{
+    const right=CAPTION_SIDE==='right'||(CAPTION_SIDE==='opposite'&&cardSide<0);
+    c.classList.toggle('right',right);
     $('#c-tag').textContent=TAGNAME[it.tag]+' · '+it.brand;$('#c-title').textContent=it.title;
     $('#c-desc').textContent=it.desc;$('#c-res').textContent=it.result;c.classList.add('in');
   },220);
@@ -26,8 +28,8 @@ export function initModal(){
     box.innerHTML='';
     if(/\.(mp4|webm)$/i.test(it.video)){const v=Object.assign(document.createElement('video'),{src:it.video,controls:true,autoplay:true,playsInline:true,loop:true});box.appendChild(v)}
     else if(it.video){const f=Object.assign(document.createElement('iframe'),{src:it.video,allowFullscreen:true});f.allow='autoplay; fullscreen';box.appendChild(f)}
-    else box.textContent='Dodaj link do wideo w js/data.js (pole „video”).';
-    const x=Object.assign(document.createElement('button'),{className:'x',textContent:'Zamknij ✕',onclick:close});box.appendChild(x);
+    else box.textContent='Add a video link in js/data.js (the "video" field).';
+    const x=Object.assign(document.createElement('button'),{className:'x',textContent:'Close ✕',onclick:close});box.appendChild(x);
     modal.classList.add('open');
   };
 }
@@ -39,35 +41,45 @@ export function initCursor(){
   return on=>c.classList.toggle('big',on);
 }
 
+/* przycisk „Let's talk”: przeskakuje na sam koniec do kontaktu + efekt magnetyczny */
+export function initTalk(){
+  const b=$('#talk');
+  b.addEventListener('click',()=>scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'}));
+  if(!matchMedia('(hover:hover)').matches)return;
+  addEventListener('mousemove',e=>{
+    const r=b.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),d=Math.hypot(dx,dy);
+    b.style.transform=d<150?`translate(${dx*.22}px,${dy*.3}px)`:'';
+  });
+}
+
+export function initToTop(){$('#totop').addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}))}
+
 export function initForm(){
   const f=$('#form'),st=$('#fstatus'),btn=f.querySelector('button');
   f.addEventListener('submit',async e=>{
     e.preventDefault();
     if(f.elements._hp.value)return;
-    const name=f.elements.name,email=f.elements.email;
-    [name,email].forEach(i=>i.classList.remove('invalid'));
+    const name=f.elements.name,email=f.elements.email,phone=f.elements.phone;
+    [name,email,phone].forEach(i=>i.classList.remove('invalid'));
     let bad=false;
     if(!name.value.trim()){name.classList.add('invalid');bad=true}
     if(!/^\S+@\S+\.\S+$/.test(email.value.trim())){email.classList.add('invalid');bad=true}
-    const phone=f.elements.phone;phone.classList.remove('invalid');
     if(phone.value.trim()&&!/^[+\d][\d\s()-]{6,}$/.test(phone.value.trim())){phone.classList.add('invalid');bad=true}
-    if(bad){st.textContent='Sprawdź zaznaczone pola (imię, e-mail, ewentualnie telefon).';return}
+    if(bad){st.textContent='Please check the highlighted fields.';return}
     const topics=[...f.querySelectorAll('[name=topic]:checked')].map(i=>i.value).join(', ');
     const data={name:name.value.trim(),email:email.value.trim(),brand:f.elements.brand.value.trim(),phone:phone.value.trim(),topics,message:f.elements.msg.value.trim()};
     if(FORM_ENDPOINT){
-      btn.disabled=true;st.textContent='Wysyłam…';
+      btn.disabled=true;st.textContent='Sending…';
       try{
         const r=await fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)});
         if(!r.ok)throw 0;
-        f.reset();st.textContent='Dzięki! Odezwiemy się najszybciej, jak to możliwe.';
-      }catch{st.textContent='Nie udało się wysłać. Napisz do nas na '+MAIL+'.'}
+        f.reset();st.textContent='Thanks! We’ll get back to you shortly.';
+      }catch{st.textContent='Something went wrong. Please email us at '+MAIL+'.'}
       btn.disabled=false;
     }else{
-      const body=`Imię: ${data.name}\nE-mail: ${data.email}\nMarka: ${data.brand}\nTelefon: ${data.phone}\nTemat: ${topics}\n\n${data.message}`;
-      location.href=`mailto:${MAIL}?subject=${encodeURIComponent('Zapytanie z portfolio: '+(data.brand||data.name))}&body=${encodeURIComponent(body)}`;
-      st.textContent='Otwieram Twoją pocztę…';
+      const body=`Name: ${data.name}\nEmail: ${data.email}\nBrand: ${data.brand}\nPhone: ${data.phone}\nInterested in: ${topics}\n\n${data.message}`;
+      location.href=`mailto:${MAIL}?subject=${encodeURIComponent('Inquiry from portfolio: '+(data.brand||data.name))}&body=${encodeURIComponent(body)}`;
+      st.textContent='Opening your email app…';
     }
   });
 }
-
-export function initToTop(){$('#totop').addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}))}
