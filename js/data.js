@@ -1,6 +1,7 @@
 /* ============ TU EDYTUJESZ TREŚĆ ============
    tag:     'reels' | 'ads' | 'ugc' | 'horizontal'  (horizontal = karta 16:9, reszta 9:16)
-   poster:  okładka 9:16 (jpg/webp), np. 'assets/work/reel1.jpg'
+   ratio:   opcjonalnie proporcje karty, np. '4:3', '1:1', '16:9' (domyślnie: 9:16, a dla tagu horizontal 16:9)
+   poster:  okładka (proporcje jak karta) (jpg/webp), np. 'assets/work/reel1.jpg'
    preview: krótki, lekki klip 9:16 (mp4, 3–6 s, do ~1 MB) – gra na karcie w 3D
    video:   pełne wideo po kliknięciu: 'assets/work/reel1.mp4' albo embed Vimeo/YouTube
    Puste pola = placeholder.
@@ -15,6 +16,7 @@ export const TAGNAME={reels:'Reel',horizontal:'Horizontal',ads:'Reklama',ugc:'UG
 export const ITEMS=[
  {title:'POP2UP',brand:'PostSignal',tag:'ads',desc:'Brief: dodać opis case study. Wpisz tu, co było celem i co zrobiłaś.',result:'Dodaj wynik',poster:'',preview:'assets/work/pop2up-preview.mp4',video:'assets/work/pop2up.mp4'},
  {title:'Perla',brand:'Perla',tag:'horizontal',desc:'Dodaj tu krótki opis: jaki był cel projektu i co zrobiłaś.',result:'Dodaj wynik',poster:'',preview:'assets/work/perla-preview.mp4',video:'assets/work/perla.mp4'},
+ {title:'Projekt 4:3',brand:'Marka L',tag:'horizontal',ratio:'4:3',desc:'Dodaj tu krótki opis: cel projektu i co zrobiłaś.',result:'Dodaj wynik',poster:'',preview:'assets/work/video43-preview.mp4',video:'assets/work/video43.mp4'},
  {title:'Launch kampanii',brand:'Marka A',tag:'ads',desc:'Brief: wejście nowego produktu na rynek. 6 wariantów hooków pod Meta Ads, zwycięzca wybrany po 72h testów.',result:'CTR +42% · CPA −31%',poster:'',preview:'',video:''},
  {title:'Reel produktowy',brand:'Marka B',tag:'reels',desc:'Brief: pokazać produkt w 20 sekund bez lektora. Mocne ujęcie otwierające, napisy w rytmie muzyki, CTA w ostatniej sekundzie.',result:'1,2 mln wyświetleń',poster:'',preview:'',video:''},
  {title:'Unboxing UGC',brand:'Marka C',tag:'ugc',desc:'Brief: autentyczny materiał do reklam. Naturalne światło i telefon, a efekt jak od prawdziwego klienta.',result:'Hook rate 38%',poster:'',preview:'',video:''},
