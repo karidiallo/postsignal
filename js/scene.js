@@ -108,6 +108,10 @@ export function createWorld(canvas,items,hooks){
     });
     const n=!inHero&&near?near:null;
     if(n!==last){last=n;hooks.onNear(n?n.userData.it:null,n?Math.sign(n.userData.tp.x):0)}
+    if(last&&hooks.onTrack){
+      const hw=last.geometry.parameters.width/2*last.scale.x,pr=x=>(new THREE.Vector3(x,last.position.y,last.position.z).project(cam).x*.5+.5)*innerWidth;
+      hooks.onTrack(pr(last.position.x-hw),pr(last.position.x+hw));
+    }
     renderer.render(scene,cam);requestAnimationFrame(tick);
   }
   resize();tick();
