@@ -11,7 +11,6 @@
 </head>
 <body>
 <video id="bgv" src="assets/video/bg.mp4" autoplay muted loop playsinline preload="auto"></video>
-<div class="shade"></div>
 <canvas id="gl"></canvas>
 <div id="spacer"></div>
 
@@ -27,6 +26,28 @@
 
 <div id="cap" class="ui"><div class="tag" id="c-tag"></div><h2 id="c-title"></h2><p id="c-desc"></p><span class="res" id="c-res"></span></div>
 <div id="cnt" class="ui"><div id="cnt-n"></div><a href="mailto:contact@postsignal.eu">contact@postsignal.eu →</a></div>
+
+<section id="cta" aria-label="Kontakt"><div class="cta-in">
+  <div class="cta-l">
+    <p class="eyebrow">Współpraca</p>
+    <h2>Zróbmy content,<br><span>który sprzedaje.</span></h2>
+    <a class="mail" href="mailto:contact@postsignal.eu">contact@postsignal.eu</a>
+  </div>
+  <form id="form" novalidate>
+    <div class="chips" role="group" aria-label="Czego potrzebujesz">
+      <label><input type="checkbox" name="topic" value="Reels"><span>Reels</span></label>
+      <label><input type="checkbox" name="topic" value="Reklamy"><span>Reklamy</span></label>
+      <label><input type="checkbox" name="topic" value="UGC"><span>UGC</span></label>
+      <label><input type="checkbox" name="topic" value="Horizontal"><span>Horizontal</span></label>
+    </div>
+    <div class="row"><input name="name" placeholder="Imię" aria-label="Imię" autocomplete="name" required><input name="email" type="email" placeholder="E-mail" aria-label="E-mail" autocomplete="email" required></div>
+    <input name="brand" placeholder="Marka / firma" aria-label="Marka lub firma" autocomplete="organization">
+    <textarea name="msg" rows="3" placeholder="Opowiedz krótko o projekcie" aria-label="Wiadomość"></textarea>
+    <input class="hp" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button type="submit">Wyślij zapytanie →</button>
+    <p id="fstatus" role="status"></p>
+  </form>
+</div></section>
 
 <div id="cursor" aria-hidden="true"><span>Play</span></div>
 <div id="modal" role="dialog" aria-modal="true"><div class="box" id="box"></div></div>
