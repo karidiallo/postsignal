@@ -22,7 +22,7 @@ function placeholder(i,it){
 
 export function createWorld(canvas,items,hooks){
   const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor(0,0);
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setClearColor(0,0);
   const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(55,1,.1,100);
   const geo=new THREE.PlaneGeometry(W,H),shGeo=new THREE.PlaneGeometry(W*1.6,H*1.45);
   const loader=new THREE.TextureLoader();
