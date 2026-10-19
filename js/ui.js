@@ -49,9 +49,11 @@ export function initForm(){
     let bad=false;
     if(!name.value.trim()){name.classList.add('invalid');bad=true}
     if(!/^\S+@\S+\.\S+$/.test(email.value.trim())){email.classList.add('invalid');bad=true}
-    if(bad){st.textContent='Uzupełnij imię i poprawny e-mail.';return}
+    const phone=f.elements.phone;phone.classList.remove('invalid');
+    if(phone.value.trim()&&!/^[+\d][\d\s()-]{6,}$/.test(phone.value.trim())){phone.classList.add('invalid');bad=true}
+    if(bad){st.textContent='Sprawdź zaznaczone pola (imię, e-mail, ewentualnie telefon).';return}
     const topics=[...f.querySelectorAll('[name=topic]:checked')].map(i=>i.value).join(', ');
-    const data={name:name.value.trim(),email:email.value.trim(),brand:f.elements.brand.value.trim(),topics,message:f.elements.msg.value.trim()};
+    const data={name:name.value.trim(),email:email.value.trim(),brand:f.elements.brand.value.trim(),phone:phone.value.trim(),topics,message:f.elements.msg.value.trim()};
     if(FORM_ENDPOINT){
       btn.disabled=true;st.textContent='Wysyłam…';
       try{
@@ -61,9 +63,11 @@ export function initForm(){
       }catch{st.textContent='Nie udało się wysłać. Napisz do nas na '+MAIL+'.'}
       btn.disabled=false;
     }else{
-      const body=`Imię: ${data.name}\nE-mail: ${data.email}\nMarka: ${data.brand}\nTemat: ${topics}\n\n${data.message}`;
+      const body=`Imię: ${data.name}\nE-mail: ${data.email}\nMarka: ${data.brand}\nTelefon: ${data.phone}\nTemat: ${topics}\n\n${data.message}`;
       location.href=`mailto:${MAIL}?subject=${encodeURIComponent('Zapytanie z portfolio: '+(data.brand||data.name))}&body=${encodeURIComponent(body)}`;
       st.textContent='Otwieram Twoją pocztę…';
     }
   });
 }
+
+export function initToTop(){$('#totop').addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}))}
