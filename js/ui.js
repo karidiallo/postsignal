@@ -13,17 +13,24 @@ export function setCaption(it,cardSide){
   if(!it)return;
   timer=setTimeout(()=>{
     c.classList.toggle('right',cardSide>0);   /* karta po prawej → opis po jej lewej, i odwrotnie */
+    $('#c-idx').textContent=pad((it._i||0)+1)+' / '+pad(total);
     $('#c-tag').textContent=TAGNAME[it.tag]+' · '+it.brand;$('#c-title').textContent=it.title;
     $('#c-desc').textContent=it.desc;$('#c-res').textContent=it.result;c.classList.add('in');
   },220);
 }
 
-let pl=-1,pr=-1;
-export function trackCaption(l,r){
-  const c=$('#cap');
-  if(Math.abs(l-pl)>1.5){c.style.setProperty('--cl',l+'px');pl=l}
-  if(Math.abs(r-pr)>1.5){c.style.setProperty('--cr',r+'px');pr=r}
+/* opis stoi obok karty: równy odstęp od karty, margines od krawędzi ekranu, środek w pionie = środek karty */
+const clampN=(a,v,b)=>Math.min(b,Math.max(a,v));
+let prev='';
+export function trackCaption(l,r,cy){
+  const c=$('#cap'),vw=innerWidth,G=clampN(40,vw*.05,88),M=clampN(24,vw*.05,80),isRight=c.classList.contains('right');
+  const avail=isRight?l-G-M:vw-r-G-M,w=Math.round(clampN(220,avail,440));
+  const x=Math.round(isRight?l-G-w:r+G),y=Math.round(cy),key=x+'|'+w+'|'+y;
+  if(key===prev)return;prev=key;
+  c.style.setProperty('--cx',x+'px');c.style.setProperty('--cw',w+'px');c.style.setProperty('--cy',y+'px');
 }
+let total=0;export const setTotal=n=>{total=n};
+const pad=n=>String(n).padStart(2,'0');
 
 export function initModal(){
   const modal=$('#modal'),box=$('#box');
