@@ -1,6 +1,6 @@
 import {ITEMS} from './data.js';
 import {createWorld} from './scene.js';
-import {initTabs,setCaption,initModal,initCursor,initForm,initToTop,initTalk} from './ui.js';
+import {initTabs,setCaption,initModal,initCursor,initForm,initToTop,initTalk,trackCaption} from './ui.js';
 
 const $=s=>document.querySelector(s);
 
@@ -14,7 +14,7 @@ addEventListener('scroll',playBg,{passive:true});
 addEventListener('pointerdown',playBg,{once:true});
 
 const openModal=initModal(),cursorBig=initCursor();
-const world=createWorld($('#gl'),ITEMS,{onPick:openModal,onHover:cursorBig,onNear:setCaption});
+const world=createWorld($('#gl'),ITEMS,{onPick:openModal,onHover:cursorBig,onNear:setCaption,onTrack:trackCaption});
 
 function sync(){
   $('#spacer').style.height=innerHeight*(1.2+world.count*.7)+'px';
