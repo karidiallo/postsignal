@@ -21,3 +21,10 @@ Moduły JS wymagają serwera: `python3 -m http.server`, potem http://localhost:8
 
 ## Publikacja
 GitHub → Settings → Pages → Deploy from branch → `main` / root. Domena: Custom domain + rekordy DNS wg instrukcji GitHuba.
+
+## POP2UP (pierwszy projekt)
+Plik `.mov` trzeba zamienić na mp4 (H.264), inaczej przeglądarki go nie zagrają:
+```
+ffmpeg -i POP2UP.mov -vf "scale=-2:1280" -c:v libx264 -crf 26 -preset slow -pix_fmt yuv420p -an -movflags +faststart assets/work/pop2up.mp4
+```
+Wynik wrzuć do `assets/work/pop2up.mp4`. Opis i wynik edytujesz w `js/data.js`.
