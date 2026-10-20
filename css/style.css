@@ -305,3 +305,12 @@ body.nobg{background:linear-gradient(120deg,#0a0c08,#14402c,#c9ad74,#14402c,#0a0
   .strike p:nth-child(n){margin-left:0}
 }
 @media(prefers-reduced-motion:reduce){.h2 em{background-size:100% 100%;color:#0b0b09;transition:none}.vc{translate:none}}
+
+/* sigil na końcu portfolio */
+#sigil{position:fixed;inset:0;z-index:1;display:grid;place-items:center;pointer-events:none;opacity:0;visibility:hidden;perspective:1200px}
+#sigil::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 50% 50%,rgba(20,64,44,.45),transparent 70%)}
+.sg{--gx:50%;--gy:50%;position:relative;width:min(74vw,calc(78vh*1.369));aspect-ratio:1400/1023;will-change:transform}
+.sg i{position:absolute;inset:0;-webkit-mask:url(../assets/img/sigil.webp) center/contain no-repeat;mask:url(../assets/img/sigil.webp) center/contain no-repeat}
+.sg .b{background:rgba(255,255,255,.09)}
+.sg .g{background:radial-gradient(circle 30vmin at var(--gx) var(--gy),#f6e5b4 0%,var(--acc) 38%,rgba(224,200,143,0) 100%)}
+@media(max-width:700px){.sg{width:92vw}}
