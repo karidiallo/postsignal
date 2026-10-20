@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 const GAP=6,START=8;
 const L=(a,b,t)=>a+(b-a)*t,cl=(v,a,b)=>Math.min(b,Math.max(a,v));
-const ratioOf=it=>{if(it.ratio){const [a,b]=it.ratio.split(':').map(Number);if(a&&b)return a/b}return it.tag==='horizontal'?16/9:9/16};
+const ratioOf=it=>{if(it.ratio){const [a,b]=it.ratio.split(':').map(Number);if(a&&b)return a/b}return it.tag==='cinematic'?16/9:9/16};
 const isL=it=>ratioOf(it)>=1;
 const sizeOf=r=>{if(r<1)return[4*r,4];const w=4.4+(r-1.333)*1.4;return[w,w/r]};
 
