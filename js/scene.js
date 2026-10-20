@@ -66,6 +66,16 @@ export function createWorld(canvas,items,hooks){
       if(narrow&&land)u.tp.x=0;});
     endZ=vis.length?-(vis.length-1)*GAP-2:START;
     tz=START+(endZ-START)*progress;
+    restBounds();
+  }
+  /* gdzie karta stoi „w spoczynku” (kamera 8 jednostek przed nią) – stąd stała pozycja opisu */
+  function restBounds(){
+    const c2=cam.clone();
+    vis.forEach(m=>{const u=m.userData;
+      c2.position.set(0,0,u.tp.z+8);c2.lookAt(0,0,u.tp.z-2);c2.updateMatrixWorld(true);c2.updateProjectionMatrix();
+      const hw=m.geometry.parameters.width/2*u.sc,P=(x,y)=>new THREE.Vector3(x,y,u.tp.z).project(c2);
+      u.cap={l:(P(u.tp.x-hw,u.tp.y).x*.5+.5)*innerWidth,r:(P(u.tp.x+hw,u.tp.y).x*.5+.5)*innerWidth,cy:(-P(u.tp.x,u.tp.y).y*.5+.5)*innerHeight};
+    });
   }
   function resize(){renderer.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.fov=cam.aspect<.8?70:55;cam.updateProjectionMatrix();layout()}
 
@@ -109,12 +119,9 @@ export function createWorld(canvas,items,hooks){
       if(s){const d=Math.abs(dist-8);if(d<nd){nd=d;near=m}}
     });
     const n=!inHero&&near?near:null;
-    if(n!==last){last=n;hooks.onNear(n?n.userData.it:null,n?Math.sign(n.userData.tp.x):0)}
-    if(last&&hooks.onTrack){
-      const hw=last.geometry.parameters.width/2*last.scale.x,pr=x=>(new THREE.Vector3(x,last.position.y,last.position.z).project(cam).x*.5+.5)*innerWidth;
-      const cy=(-new THREE.Vector3(last.position.x,last.userData.tp.y,last.position.z).project(cam).y*.5+.5)*innerHeight;
-      hooks.onTrack(pr(last.position.x-hw),pr(last.position.x+hw),cy);
-    }
+    if(n){const u=n.userData,ds=camZ-n.position.z-8;let w=cl(1-(Math.abs(ds)-1)/1.6,0,1);w=w*w*(3-2*w);
+      hooks.onCaption(u.it,Math.sign(u.tp.x),w,u.cap,ds)}
+    else hooks.onCaption(null,0,0,null,0);
     renderer.render(scene,cam);requestAnimationFrame(tick);
   }
   resize();tick();
