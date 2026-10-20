@@ -14,8 +14,8 @@ export function setCaption(it,cardSide){
   timer=setTimeout(()=>{
     c.classList.toggle('right',cardSide>0);   /* karta po prawej → opis po jej lewej, i odwrotnie */
     $('#c-idx').textContent=pad((it._i||0)+1)+' / '+pad(total);
-    $('#c-tag').textContent=TAGNAME[it.tag]+' · '+it.brand;$('#c-title').textContent=it.title;
-    $('#c-desc').textContent=it.desc;$('#c-res').textContent=it.result;c.classList.add('in');
+    $('#c-tag').textContent=(it.kind||TAGNAME[it.tag])+(it.brand?' · '+it.brand:'');$('#c-title').textContent=it.title;
+    $('#c-desc').textContent=it.desc;const rs=$('#c-res');rs.textContent=it.result||'';rs.style.display=it.result?'':'none';c.classList.add('in');
   },220);
 }
 
@@ -57,7 +57,7 @@ export function initCursor(){
 /* przycisk „Let's talk”: przeskakuje na sam koniec do kontaktu + efekt magnetyczny */
 export function initTalk(){
   const b=$('#talk');
-  b.addEventListener('click',()=>scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'}));
+  b.addEventListener('click',()=>$('#contact').scrollIntoView({behavior:'smooth'}));
   if(!matchMedia('(hover:hover)').matches)return;
   addEventListener('mousemove',e=>{
     const r=b.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),d=Math.hypot(dx,dy);
@@ -95,4 +95,10 @@ export function initForm(){
       st.textContent='Opening your email app…';
     }
   });
+}
+
+export function initGoto(){document.querySelectorAll('[data-goto]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();$('#'+el.dataset.goto).scrollIntoView({behavior:'smooth'})}))}
+export function initReveal(){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+  document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
 }
