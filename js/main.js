@@ -1,6 +1,7 @@
 import {ITEMS} from './data.js';
 import {createWorld} from './scene.js';
-import {initTabs,setCaption,initModal,initCursor,initForm,initToTop,initTalk,initGoto,initReveal,trackCaption,setTotal} from './ui.js';
+import {initTabs,updateCaption,initModal,initCursor,initForm,initToTop,initTalk,initGoto,initReveal,setTotal} from './ui.js';
+import {initSections} from './sections.js';
 
 const $=s=>document.querySelector(s);
 
@@ -15,7 +16,7 @@ addEventListener('pointerdown',playBg,{once:true});
 
 ITEMS.forEach((it,i)=>{it._i=i});setTotal(ITEMS.length);
 const openModal=initModal(),cursorBig=initCursor();
-const world=createWorld($('#gl'),ITEMS,{onPick:openModal,onHover:cursorBig,onNear:setCaption,onTrack:trackCaption});
+const world=createWorld($('#gl'),ITEMS,{onPick:openModal,onHover:cursorBig,onCaption:updateCaption});
 const spacer=$('#spacer'),contact=$('#contact');
 
 /* część 3D = wysokość #spacer; dalej zwykłe sekcje z treścią */
@@ -29,7 +30,7 @@ function sync(){
   $('#talk').classList.toggle('show',!hero&&contact.getBoundingClientRect().top>innerHeight*.75);
   world.setProgress(p,hero);
 }
-initForm();initToTop();initTalk();initGoto();initReveal();
+initForm();initToTop();initTalk();initGoto();initReveal();initSections();
 initTabs(k=>{world.setFilter(k);scrollTo({top:0,behavior:'smooth'});sync()});
 addEventListener('scroll',sync,{passive:true});addEventListener('resize',sync);
 sync();
