@@ -1,3 +1,4 @@
+import {BASE} from './i18n.js';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const hoverOK=matchMedia('(hover:hover)').matches;
 
@@ -16,7 +17,7 @@ export function initSections(){
 
   /* rozsuwane panele branż */
   const PV=['pop2up','perla','mozaika','video43'],pans=$$('.pan');
-  pans.forEach((p,i)=>{const v=document.createElement('video');Object.assign(v,{muted:true,loop:true,playsInline:true,preload:'none'});v.dataset.src='assets/work/'+PV[i]+'.mp4';p.prepend(v)});
+  pans.forEach((p,i)=>{const v=document.createElement('video');Object.assign(v,{muted:true,loop:true,playsInline:true,preload:'none'});v.dataset.src=BASE+'assets/work/'+PV[i]+'-preview.mp4';p.prepend(v)});
   const setPan=i=>pans.forEach((p,k)=>{p.classList.toggle('open',k===i);const v=p.querySelector('video');if(!v)return;if(k===i){if(!v.src)v.src=v.dataset.src;v.play().catch(()=>{})}else v.pause()});
   /* wideo startuje tylko w widoku */
   const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){if(!v.src)v.src=v.dataset.src;v.play().catch(()=>{})}else v.pause()}),{rootMargin:'150px'});
