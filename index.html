@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 
 <script type="importmap">{"imports":{"three":"./js/vendor/three.module.min.js"}}</script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PostSignal – Content that makes people choose you</title>
 <meta name="description" content="Reels, advertising creatives and UGC-style content for beauty brands, aesthetic clinics, hotels, guesthouses and restaurants.">
 <link rel="canonical" href="https://postsignal.eu/">
@@ -31,11 +31,12 @@
 <header class="ui">
   <a class="logo" href="./" data-nav="top" aria-label="PostSignal"><img src="assets/img/logo.png" alt="PostSignal"></a>
   <div class="hr">
-    <nav id="menu" aria-label="Main"><a href="#work" data-nav="work">Work</a><a href="#who" data-nav="who">Clients</a><a href="#create" data-nav="create">Services</a><a href="#how" data-nav="how">Process</a><a class="cta" href="#contact" data-nav="contact">Contact</a></nav>
+    <nav id="menu" aria-label="Main"><a href="#work" data-nav="work">Work</a><a href="#who" data-nav="who">Clients</a><a href="#create" data-nav="create">Services</a><a href="#how" data-nav="how">Process</a><a class="cta" href="#contact" data-nav="contact">Contact</a><div class="mlegal" aria-label="Legal"><a href="privacy-policy/">Privacy Policy</a><a href="cookie-policy/">Cookie Policy</a><a href="terms/">Terms of Use</a></div></nav>
     <div class="lang" role="group" aria-label="Language">
       <a href="./" hreflang="en" lang="en" class="on" aria-current="true" aria-label="English" title="English"><img src="assets/img/flag-gb.svg" alt="" width="22" height="22"></a>
       <a href="pl/" hreflang="pl" lang="pl" aria-label="Polski" title="Polski"><img src="assets/img/flag-pl.svg" alt="" width="22" height="22"></a>
     </div>
+    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </div>
 </header>
 
@@ -128,6 +129,7 @@
       <label><input type="checkbox" name="topic" value="Not sure yet"><span>Not sure yet</span></label>
     </div>
     <textarea name="msg" rows="3" placeholder="Tell us a little about your project (optional)" aria-label="Project details, optional"></textarea>
+    <label class="consent"><input type="checkbox" name="consent" required><span>I have read the <a href="privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
     <input class="hp" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true">
     <button type="submit" class="btn">Send inquiry →</button>
     <p id="fstatus" role="status"></p>
@@ -141,7 +143,7 @@
     <div><img src="assets/img/logo.png" alt="PostSignal" class="flogo"></div>
     <div class="fr"><a href="mailto:contact@postsignal.eu">contact@postsignal.eu</a><button type="button" id="totop">Back to top ↑</button></div>
   </div>
-  <p class="copy">© 2026 PostSignal</p>
+  <div class="fbottom"><p class="copy">© 2026 PostSignal</p><nav class="flinks" aria-label="Legal"><a href="privacy-policy/">Privacy Policy</a><a href="cookie-policy/">Cookie Policy</a><a href="terms/">Terms of Use</a></nav></div>
 </div></footer>
 
 <div id="cursor" aria-hidden="true"><span>Play</span></div>
