@@ -20,7 +20,7 @@
 <script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
-<link rel="modulepreload" href="./js/vendor/three.module.min.js"><link rel="stylesheet" href="css/style.css?v=20261021">
+<link rel="modulepreload" href="./js/vendor/three.module.min.js"><link rel="stylesheet" href="css/style.css?v=20261022">
 </head>
 <body>
 <video id="bgv" src="assets/video/bg.mp4" poster="assets/video/bg-poster.webp" autoplay muted loop playsinline preload="auto"></video>
@@ -29,9 +29,9 @@
 <div id="bar"></div>
 
 <header class="ui">
-  <img src="assets/img/logo.png" alt="PostSignal">
+  <a class="logo" href="./" data-nav="top" aria-label="PostSignal"><img src="assets/img/logo.png" alt="PostSignal"></a>
   <div class="hr">
-    <nav id="tabs" aria-label="Filter work"></nav>
+    <nav id="menu" aria-label="Main"><a href="#work" data-nav="work">Work</a><a href="#who" data-nav="who">Clients</a><a href="#create" data-nav="create">Services</a><a href="#how" data-nav="how">Process</a><a class="cta" href="#contact" data-nav="contact">Contact</a></nav>
     <div class="lang" role="group" aria-label="Language">
       <a href="./" hreflang="en" lang="en" class="on" aria-current="true" aria-label="English" title="English"><img src="assets/img/flag-gb.svg" alt="" width="22" height="22"></a>
       <a href="pl/" hreflang="pl" lang="pl" aria-label="Polski" title="Polski"><img src="assets/img/flag-pl.svg" alt="" width="22" height="22"></a>
