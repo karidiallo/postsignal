@@ -18,7 +18,7 @@ addEventListener('pointerdown',playBg,{once:true});
 ITEMS.forEach((it,i)=>{it._i=i});setTotal(ITEMS.length);
 const openModal=initModal(),cursorBig=initCursor();
 const world=createWorld($('#gl'),ITEMS,{onPick:openModal,onHover:cursorBig,onCaption:updateCaption});
-const spacer=$('#spacer'),contact=$('#contact'),sigil=initSigil();
+const gl=$('#gl'),spacer=$('#spacer'),contact=$('#contact'),sigil=initSigil();
 const sm=t=>{t=Math.min(1,Math.max(0,t));return t*t*(3-2*t)};
 
 /* część 3D = wysokość #spacer; dalej zwykłe sekcje z treścią */
@@ -36,6 +36,8 @@ function sync(){
   const s1=travel*.9,s2=travel+OUT*.4,f1=travel+OUT*.75,f2=travel+OUT+innerHeight*.55;
   const out=sm((scrollY-f1)/(f2-f1));
   sigil.set(sm((scrollY-s1)/(s2-s1))*(1-out),out);
+  /* po wyjściu z części 3D ukrywamy canvas – inaczej ostatnia klatka (zatrzymana karta) wisi za całą treścią */
+  gl.style.opacity=1-out;gl.style.visibility=out>=1?'hidden':'';
 }
 initForm();initToTop();initTalk();initGoto();initReveal();initSections();
 initMenu();
