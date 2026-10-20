@@ -19,13 +19,15 @@ export function initSigil(){
     }
     x+=(tx-x)*.07;y+=(ty-y)*.07;gx+=(tgx-gx)*.12;gy+=(tgy-gy)*.12;
     sg.style.setProperty('--gx',(gx*100).toFixed(1)+'%');sg.style.setProperty('--gy',(gy*100).toFixed(1)+'%');
-    sg.style.transform=`translate3d(${(-x*18).toFixed(1)}px,${(-y*12-lift*70).toFixed(1)}px,0) rotateX(${(-y*6).toFixed(2)}deg) rotateY(${(x*8).toFixed(2)}deg) scale(${(.9+.1*vis).toFixed(3)})`;
+    /* wjazd: rośnie z ~55% do 100% razem z pojawianiem się; potem delikatnie „oddycha” */
+    const grow=lift>.001?1:vis,breath=still?0:Math.sin(t/1100)*.014;
+    sg.style.transform=`translate3d(${(-x*18).toFixed(1)}px,${(-y*12-lift*70).toFixed(1)}px,0) rotateX(${(-y*6).toFixed(2)}deg) rotateY(${(x*8).toFixed(2)}deg) scale(${((.55+.45*grow)*(1+breath)).toFixed(3)})`;
     raf=requestAnimationFrame(frame);
   }
   /* v: 0–1 widoczność, k: 0–1 wyjście w górę przy przejściu do sekcji z tekstem */
   return{set(v,k){
     vis=v;lift=k;
-    root.style.opacity=v.toFixed(3);root.style.visibility=v<.01?'hidden':'visible';
+    root.style.opacity=v.toFixed(3);root.classList.toggle('live',v>=.3);root.style.visibility=v<.01?'hidden':'visible';
     if(v>=.01&&!raf)raf=requestAnimationFrame(frame);
   }};
 }
