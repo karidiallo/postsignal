@@ -321,8 +321,18 @@ body.nobg{background:linear-gradient(120deg,#0a0c08,#14402c,#c9ad74,#14402c,#0a0
 /* sigil na końcu portfolio */
 #sigil{position:fixed;inset:0;z-index:1;display:grid;place-items:center;pointer-events:none;opacity:0;visibility:hidden;perspective:1200px}
 #sigil::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 50% 50%,rgba(20,64,44,.45),transparent 70%)}
-.sg{--gx:50%;--gy:50%;position:relative;width:min(74vw,calc(78vh*1.369));aspect-ratio:1400/1023;will-change:transform}
+.sg{--gx:50%;--gy:50%;position:relative;width:min(64vw,calc(68vh*1.369));aspect-ratio:1400/1023;will-change:transform}
 .sg i{position:absolute;inset:0;-webkit-mask:url(../assets/img/sigil.webp) center/contain no-repeat;mask:url(../assets/img/sigil.webp) center/contain no-repeat}
 .sg .b{background:rgba(255,255,255,.09)}
 .sg .g{background:radial-gradient(circle 30vmin at var(--gx) var(--gy),#f6e5b4 0%,var(--acc) 38%,rgba(224,200,143,0) 100%)}
-@media(max-width:700px){.sg{width:92vw}}
+/* „nadawanie sygnału”: pierścień → bliższe fale → dalsze fale, w pętli; fale dodatkowo rozchodzą się na zewnątrz */
+.sg .w,.sg .p{opacity:0;background:#f6e5b4;animation:sgw 3.6s ease-in-out infinite;animation-play-state:paused}
+.sg .w0{-webkit-mask-image:url(../assets/img/sigil-core.webp);mask-image:url(../assets/img/sigil-core.webp)}
+.sg .w1,.sg .p1{-webkit-mask-image:url(../assets/img/sigil-w1.webp);mask-image:url(../assets/img/sigil-w1.webp);animation-delay:.3s}
+.sg .w2,.sg .p2{-webkit-mask-image:url(../assets/img/sigil-w2.webp);mask-image:url(../assets/img/sigil-w2.webp);animation-delay:.6s}
+.sg .p{background:var(--acc);animation-name:sgp;transform-origin:50% 50%}
+#sigil.live .sg .w,#sigil.live .sg .p{animation-play-state:running}
+@keyframes sgw{0%{opacity:0}14%{opacity:.85}40%{opacity:0}100%{opacity:0}}
+@keyframes sgp{0%{opacity:0;transform:scale(1)}14%{opacity:.5;transform:scale(1)}55%{opacity:0;transform:scale(1.2)}100%{opacity:0;transform:scale(1.2)}}
+@media(prefers-reduced-motion:reduce){.sg .w,.sg .p{animation:none;opacity:0}}
+@media(max-width:700px){.sg{width:84vw}}
