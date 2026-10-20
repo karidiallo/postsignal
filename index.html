@@ -18,10 +18,10 @@
 <script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=20261020">
+<link rel="modulepreload" href="./js/vendor/three.module.min.js"><link rel="stylesheet" href="css/style.css?v=20261020">
 </head>
 <body>
-<video id="bgv" src="assets/video/bg.mp4" autoplay muted loop playsinline preload="auto"></video>
+<video id="bgv" src="assets/video/bg.mp4" poster="assets/video/bg-poster.webp" autoplay muted loop playsinline preload="auto"></video>
 <canvas id="gl"></canvas>
 <div id="sigil" aria-hidden="true"><div class="sg" id="sg"><i class="b"></i><i class="g"></i></div></div>
 <div id="bar"></div>
@@ -62,9 +62,9 @@
   <h2 class="h2" data-r>People can’t choose what they don’t <em>understand.</em></h2>
   <p class="words" data-words>A guest comparing hotels. A patient researching clinics. Your content decides before they ever contact you.</p>
   <div class="reels">
-    <article class="vc" data-r data-par="1"><video data-src="assets/work/pop2up.mp4" muted loop playsinline preload="none"></video><span class="k">01</span><h3>Show the <em>experience.</em></h3></article>
-    <article class="vc" data-r data-par="-1"><video data-src="assets/work/mozaika.mp4" muted loop playsinline preload="none"></video><span class="k">02</span><h3>Build <em>confidence.</em></h3></article>
-    <article class="vc" data-r data-par="1"><video data-src="assets/work/notseen.mp4" muted loop playsinline preload="none"></video><span class="k">03</span><h3>Be <em>memorable.</em></h3></article>
+    <article class="vc" data-r data-par="1"><video data-src="assets/work/pop2up-preview.mp4" muted loop playsinline preload="none"></video><span class="k">01</span><h3>Show the <em>experience.</em></h3></article>
+    <article class="vc" data-r data-par="-1"><video data-src="assets/work/mozaika-preview.mp4" muted loop playsinline preload="none"></video><span class="k">02</span><h3>Build <em>confidence.</em></h3></article>
+    <article class="vc" data-r data-par="1"><video data-src="assets/work/notseen-preview.mp4" muted loop playsinline preload="none"></video><span class="k">03</span><h3>Be <em>memorable.</em></h3></article>
   </div>
 </div></section>
 
@@ -86,7 +86,7 @@
 <section class="sec" id="create"><div class="wrap">
   <p class="eyebrow" data-r>What we create</p>
   <h2 class="h2" data-r>The right <em>format</em> for the job.</h2>
-  <div class="bleed"><div class="track"><div class="tile2 p"><video data-src="assets/work/pop2up.mp4" muted loop playsinline preload="none"></video><span class="chip">Reels · 9:16</span></div><div class="tile2 l"><video data-src="assets/work/perla.mp4" muted loop playsinline preload="none"></video><span class="chip">Campaign · 16:9</span></div><div class="tile2 p"><video data-src="assets/work/mozaika.mp4" muted loop playsinline preload="none"></video><span class="chip">Ads</span></div><div class="tile2 l"><video data-src="assets/work/video43.mp4" muted loop playsinline preload="none"></video><span class="chip">Brand visuals · 4:3</span></div><div class="tile2 p"><video data-src="assets/work/notseen.mp4" muted loop playsinline preload="none"></video><span class="chip">UGC-style</span></div></div></div>
+  <div class="bleed"><div class="track"><div class="tile2 p"><video data-src="assets/work/pop2up-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Reels · 9:16</span></div><div class="tile2 l"><video data-src="assets/work/perla-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Campaign · 16:9</span></div><div class="tile2 p"><video data-src="assets/work/mozaika-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Ads</span></div><div class="tile2 l"><video data-src="assets/work/video43-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Brand visuals · 4:3</span></div><div class="tile2 p"><video data-src="assets/work/notseen-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">UGC-style</span></div></div></div>
 </div></section>
 
 <section class="sec" id="difference"><div class="wrap">
@@ -145,7 +145,7 @@
 <div id="cursor" aria-hidden="true"><span>Play</span></div>
 <div id="modal" role="dialog" aria-modal="true"><div class="box" id="box"></div></div>
 
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<script type="importmap">{"imports":{"three":"./js/vendor/three.module.min.js"}}</script>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>
