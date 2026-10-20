@@ -2,6 +2,8 @@
 <html lang="pl" data-base="../">
 <head>
 <meta charset="utf-8">
+
+<script type="importmap">{"imports":{"three":"../js/vendor/three.module.min.js"}}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PostSignal – Content, dzięki któremu ludzie wybierają Ciebie</title>
 <meta name="description" content="Reelsy, kreacje reklamowe i content w stylu UGC dla marek beauty, klinik medycyny estetycznej, hoteli, pensjonatów i restauracji.">
@@ -18,10 +20,10 @@
 <script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/style.css">
+<link rel="modulepreload" href="../js/vendor/three.module.min.js"><link rel="stylesheet" href="../css/style.css?v=20261020">
 </head>
 <body>
-<video id="bgv" src="../assets/video/bg.mp4" autoplay muted loop playsinline preload="auto"></video>
+<video id="bgv" src="../assets/video/bg.mp4" poster="../assets/video/bg-poster.webp" autoplay muted loop playsinline preload="auto"></video>
 <canvas id="gl"></canvas>
 <div id="sigil" aria-hidden="true"><div class="sg" id="sg"><i class="b"></i><i class="g"></i></div></div>
 <div id="bar"></div>
@@ -62,9 +64,9 @@
   <h2 class="h2" data-r>Ludzie nie wybiorą tego, czego <em>nie rozumieją.</em></h2>
   <p class="words" data-words>Gość porównujący hotele. Pacjent szukający kliniki. Twój content decyduje, zanim ktokolwiek się z Tobą skontaktuje.</p>
   <div class="reels">
-    <article class="vc" data-r data-par="1"><video data-src="../assets/work/pop2up.mp4" muted loop playsinline preload="none"></video><span class="k">01</span><h3>Pokaż <em>doświadczenie.</em></h3></article>
-    <article class="vc" data-r data-par="-1"><video data-src="../assets/work/mozaika.mp4" muted loop playsinline preload="none"></video><span class="k">02</span><h3>Zbuduj <em>zaufanie.</em></h3></article>
-    <article class="vc" data-r data-par="1"><video data-src="../assets/work/notseen.mp4" muted loop playsinline preload="none"></video><span class="k">03</span><h3>Zapadnij <em>w pamięć.</em></h3></article>
+    <article class="vc" data-r data-par="1"><video poster="../assets/work/pop2up-poster.webp" data-src="../assets/work/pop2up-preview.mp4" muted loop playsinline preload="none"></video><span class="k">01</span><h3>Pokaż <em>doświadczenie.</em></h3></article>
+    <article class="vc" data-r data-par="-1"><video poster="../assets/work/mozaika-poster.webp" data-src="../assets/work/mozaika-preview.mp4" muted loop playsinline preload="none"></video><span class="k">02</span><h3>Zbuduj <em>zaufanie.</em></h3></article>
+    <article class="vc" data-r data-par="1"><video poster="../assets/work/notseen-poster.webp" data-src="../assets/work/notseen-preview.mp4" muted loop playsinline preload="none"></video><span class="k">03</span><h3>Zapadnij <em>w pamięć.</em></h3></article>
   </div>
 </div></section>
 
@@ -86,7 +88,7 @@
 <section class="sec" id="create"><div class="wrap">
   <p class="eyebrow" data-r>Co tworzymy</p>
   <h2 class="h2" data-r>Odpowiedni <em>format</em> do zadania.</h2>
-  <div class="bleed"><div class="track"><div class="tile2 p"><video data-src="../assets/work/pop2up.mp4" muted loop playsinline preload="none"></video><span class="chip">Reels · 9:16</span></div><div class="tile2 l"><video data-src="../assets/work/perla.mp4" muted loop playsinline preload="none"></video><span class="chip">Kampania · 16:9</span></div><div class="tile2 p"><video data-src="../assets/work/mozaika.mp4" muted loop playsinline preload="none"></video><span class="chip">Reklamy</span></div><div class="tile2 l"><video data-src="../assets/work/video43.mp4" muted loop playsinline preload="none"></video><span class="chip">Wizualia marki · 4:3</span></div><div class="tile2 p"><video data-src="../assets/work/notseen.mp4" muted loop playsinline preload="none"></video><span class="chip">W stylu UGC</span></div></div></div>
+  <div class="bleed"><div class="track"><div class="tile2 p"><video poster="../assets/work/pop2up-poster.webp" data-src="../assets/work/pop2up-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Reels · 9:16</span></div><div class="tile2 l"><video poster="../assets/work/perla-poster.webp" data-src="../assets/work/perla-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Kampania · 16:9</span></div><div class="tile2 p"><video poster="../assets/work/mozaika-poster.webp" data-src="../assets/work/mozaika-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Reklamy</span></div><div class="tile2 l"><video poster="../assets/work/video43-poster.webp" data-src="../assets/work/video43-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Wizualia marki · 4:3</span></div><div class="tile2 p"><video poster="../assets/work/notseen-poster.webp" data-src="../assets/work/notseen-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">W stylu UGC</span></div></div></div>
 </div></section>
 
 <section class="sec" id="difference"><div class="wrap">
@@ -145,7 +147,6 @@
 <div id="cursor" aria-hidden="true"><span>Odtwórz</span></div>
 <div id="modal" role="dialog" aria-modal="true"><div class="box" id="box"></div></div>
 
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 <script type="module" src="../js/main.js"></script>
 </body>
 </html>
