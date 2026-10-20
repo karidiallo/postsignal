@@ -1,6 +1,6 @@
 import {ITEMS} from './data.js';
 import {createWorld} from './scene.js';
-import {initTabs,updateCaption,initModal,initCursor,initForm,initToTop,initTalk,initGoto,initReveal,setTotal} from './ui.js';
+import {initMenu,updateCaption,initModal,initCursor,initForm,initToTop,initTalk,initGoto,initReveal,setTotal} from './ui.js';
 import {initSections} from './sections.js';
 import {initSigil} from './sigil.js';
 
@@ -38,7 +38,7 @@ function sync(){
   sigil.set(sm((scrollY-s1)/(s2-s1))*(1-out),out);
 }
 initForm();initToTop();initTalk();initGoto();initReveal();initSections();
-initTabs(k=>{world.setFilter(k);scrollTo({top:0,behavior:'smooth'});sync()});
+initMenu();
 addEventListener('scroll',sync,{passive:true});addEventListener('resize',sync);
 sync();
 
