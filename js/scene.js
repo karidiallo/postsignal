@@ -78,7 +78,9 @@ export function createWorld(canvas,items,hooks){
   canvas.addEventListener('click',()=>{const m=pick();if(m)hooks.onPick(m.userData.it)});
   addEventListener('resize',resize);
 
+  let paused=false;
   function tick(){
+    if(paused){requestAnimationFrame(tick);return}
     const t=performance.now()/1000;
     camZ=L(camZ,tz,.08);
     cam.position.set(L(cam.position.x,mx*.7,.05),L(cam.position.y,-my*.4,.05),camZ);
@@ -118,6 +120,7 @@ export function createWorld(canvas,items,hooks){
   resize();tick();
   return{
     setFilter(k){filter=k;layout()},
+    setPaused(v){paused=v},
     setProgress(p,hero){progress=p;inHero=hero;tz=START+(endZ-START)*p},
     get count(){return vis.length}
   };
