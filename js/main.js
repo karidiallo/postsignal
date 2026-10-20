@@ -41,3 +41,7 @@ initForm();initToTop();initTalk();initGoto();initReveal();initSections();
 initTabs(k=>{world.setFilter(k);scrollTo({top:0,behavior:'smooth'});sync()});
 addEventListener('scroll',sync,{passive:true});addEventListener('resize',sync);
 sync();
+
+/* mobile (iOS Low Power Mode itp.) potrafi zablokować autoplay – pierwszy dotyk uruchamia widoczne wideo */
+const kick=()=>document.querySelectorAll('video').forEach(v=>{const r=v.getBoundingClientRect();if(v.src&&v.paused&&r.bottom>0&&r.top<innerHeight&&!v.closest('#modal'))v.play().catch(()=>{})});
+['touchstart','pointerdown'].forEach(e=>addEventListener(e,kick,{once:true,passive:true}));
