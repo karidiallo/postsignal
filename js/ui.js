@@ -1,4 +1,5 @@
 import {TABS,TAGNAME,FORM_ENDPOINT,MAIL} from './config.js';
+import {T} from './i18n.js';
 const $=s=>document.querySelector(s);
 
 export function initTabs(onChange){
@@ -41,8 +42,8 @@ export function initModal(){
     box.innerHTML='';
     if(/\.(mp4|webm)$/i.test(it.video)){const v=Object.assign(document.createElement('video'),{src:it.video,controls:true,autoplay:true,playsInline:true,loop:true});box.appendChild(v)}
     else if(it.video){const f=Object.assign(document.createElement('iframe'),{src:it.video,allowFullscreen:true});f.allow='autoplay; fullscreen';box.appendChild(f)}
-    else box.textContent='Add a video link in js/data.js (the "video" field).';
-    const x=Object.assign(document.createElement('button'),{className:'x',textContent:'Close ✕',onclick:close});box.appendChild(x);
+    else box.textContent=T.modalEmpty;
+    const x=Object.assign(document.createElement('button'),{className:'x',textContent:T.close,onclick:close});box.appendChild(x);
     modal.classList.add('open');
   };
 }
@@ -78,21 +79,21 @@ export function initForm(){
     if(!name.value.trim()){name.classList.add('invalid');bad=true}
     if(!/^\S+@\S+\.\S+$/.test(email.value.trim())){email.classList.add('invalid');bad=true}
     if(phone.value.trim()&&!/^[+\d][\d\s()-]{6,}$/.test(phone.value.trim())){phone.classList.add('invalid');bad=true}
-    if(bad){st.textContent='Please check the highlighted fields.';return}
+    if(bad){st.textContent=T.invalid;return}
     const topics=[...f.querySelectorAll('[name=topic]:checked')].map(i=>i.value).join(', ');
     const data={name:name.value.trim(),email:email.value.trim(),brand:f.elements.brand.value.trim(),phone:phone.value.trim(),topics,message:f.elements.msg.value.trim()};
     if(FORM_ENDPOINT){
-      btn.disabled=true;st.textContent='Sending…';
+      btn.disabled=true;st.textContent=T.sending;
       try{
         const r=await fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)});
         if(!r.ok)throw 0;
-        f.reset();st.textContent='Thanks! We’ll get back to you shortly.';
-      }catch{st.textContent='Something went wrong. Please email us at '+MAIL+'.'}
+        f.reset();st.textContent=T.thanks;
+      }catch{st.textContent=T.error+MAIL+'.'}
       btn.disabled=false;
     }else{
-      const body=`Name: ${data.name}\nEmail: ${data.email}\nBrand: ${data.brand}\nPhone: ${data.phone}\nInterested in: ${topics}\n\n${data.message}`;
-      location.href=`mailto:${MAIL}?subject=${encodeURIComponent('Inquiry from portfolio: '+(data.brand||data.name))}&body=${encodeURIComponent(body)}`;
-      st.textContent='Opening your email app…';
+      const L=T.labels,body=`${L.name}: ${data.name}\n${L.email}: ${data.email}\n${L.brand}: ${data.brand}\n${L.phone}: ${data.phone}\n${L.topics}: ${topics}\n\n${data.message}`;
+      location.href=`mailto:${MAIL}?subject=${encodeURIComponent(T.subject+(data.brand||data.name))}&body=${encodeURIComponent(body)}`;
+      st.textContent=T.opening;
     }
   });
 }
