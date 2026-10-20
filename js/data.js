@@ -16,7 +16,7 @@ const MEDIA=[
  {tag:'cinematic',poster:'',preview:'assets/work/perla-preview.mp4',video:'assets/work/perla.mp4'},
  {tag:'ads',poster:'',preview:'assets/work/mozaika-preview.mp4',video:'assets/work/mozaika.mp4'},
  {tag:'cinematic',ratio:'4:3',poster:'',preview:'assets/work/video43-preview.mp4',video:'assets/work/video43.mp4'},
- {tag:'ugc',poster:'',preview:'assets/work/vertical-preview.mp4',video:'assets/work/vertical.mp4'}
+ {tag:'ugc',poster:'',preview:'assets/work/vesperis.mp4',video:'assets/work/vesperis.mp4'}
 ];
 
 /* Teksty – ta sama kolejność co MEDIA. brand/result zwykle takie same w obu językach */
