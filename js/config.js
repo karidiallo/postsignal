@@ -5,5 +5,5 @@
 export const FORM_ENDPOINT='';
 export const MAIL='contact@postsignal.eu';
 
-export const TABS=[['all','All'],['reels','Reels'],['ads','Ads'],['ugc','UGC'],['horizontal','Horizontal']];
-export const TAGNAME={reels:'Reel',ads:'Ad',ugc:'UGC',horizontal:'Horizontal'};
+export const TABS=[['all','All'],['reels','Reels'],['ads','Ads'],['ugc','UGC'],['cinematic','Cinematic']];
+export const TAGNAME={reels:'Reel',ads:'Ad',ugc:'UGC',cinematic:'Cinematic'};
