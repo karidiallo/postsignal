@@ -2,10 +2,22 @@ import {TABS,TAGNAME,FORM_ENDPOINT,MAIL} from './config.js';
 import {T} from './i18n.js';
 const $=s=>document.querySelector(s);
 
-export function initTabs(onChange){
-  const nav=$('#tabs');
-  TABS.forEach(([k,l])=>{const b=document.createElement('button');b.textContent=l;if(k==='all')b.className='on';
-    b.onclick=()=>{[...nav.children].forEach(c=>c.classList.toggle('on',c===b));onChange(k)};nav.appendChild(b)});
+export function initMenu(){
+  const nav=$('#menu'),links=[...nav.querySelectorAll('a[data-nav]')],ids=links.map(a=>a.dataset.nav),secs=[...document.querySelectorAll('main .sec')];
+  const go=id=>{
+    if(id==='top')scrollTo({top:0,behavior:'smooth'});
+    else if(id==='work')scrollTo({top:innerHeight*.5,behavior:'smooth'});   /* początek portfolio (hero znika, pierwsza karta) */
+    else{const el=$('#'+id);if(el)el.scrollIntoView({behavior:'smooth'})}
+  };
+  document.querySelectorAll('[data-nav]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(a.dataset.nav)}));
+  /* podświetla aktualną sekcję; tło nagłówka włącza się, gdy zaczyna się treść pod portfolio */
+  const spy=()=>{
+    let cur='work';
+    secs.forEach(s=>{if(s.getBoundingClientRect().top<=innerHeight*.45)cur=ids.includes(s.id)?s.id:null});
+    links.forEach(a=>a.classList.toggle('on',a.dataset.nav===cur));
+    document.body.classList.toggle('past',scrollY>$('#content').offsetTop-90);
+  };
+  addEventListener('scroll',spy,{passive:true});addEventListener('resize',spy);spy();
 }
 
 /* opis przy karcie: pozycja stała, przezroczystość i lekki dryf zależą od scrolla (bez timerów i skakania) */
