@@ -15,7 +15,12 @@ export function initSections(){
   setAcc(0);
 
   /* rozsuwane panele branż */
-  const pans=$$('.pan'),setPan=i=>pans.forEach((p,k)=>p.classList.toggle('open',k===i));
+  const PV=['pop2up','perla','mozaika','video43'],pans=$$('.pan');
+  pans.forEach((p,i)=>{const v=document.createElement('video');Object.assign(v,{muted:true,loop:true,playsInline:true,preload:'none'});v.dataset.src='assets/work/'+PV[i]+'.mp4';p.prepend(v)});
+  const setPan=i=>pans.forEach((p,k)=>{p.classList.toggle('open',k===i);const v=p.querySelector('video');if(!v)return;if(k===i){if(!v.src)v.src=v.dataset.src;v.play().catch(()=>{})}else v.pause()});
+  /* wideo startuje tylko w widoku */
+  const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){if(!v.src)v.src=v.dataset.src;v.play().catch(()=>{})}else v.pause()}),{rootMargin:'150px'});
+  $$('.vc video,.tile2 video').forEach(v=>io.observe(v));
   pans.forEach((p,i)=>{if(hoverOK)p.addEventListener('mouseenter',()=>setPan(i));p.addEventListener('click',()=>setPan(i));p.addEventListener('focus',()=>setPan(i))});
   setPan(0);
 
@@ -29,20 +34,8 @@ export function initSections(){
     el.addEventListener('pointerleave',()=>{el.style.transform=''});
   });
 
-  /* podgląd klipu pod kursorem na liście formatów */
-  const pk=document.createElement('div');pk.className='peek';pk.innerHTML='<video muted loop playsinline></video>';document.body.appendChild(pk);
-  const pv=pk.firstChild;let tx=0,ty=0,px=0,py=0;
-  if(hoverOK){
-    $$('.row').forEach(r=>{
-      r.addEventListener('mouseenter',()=>{pv.src=r.dataset.v;pv.play().catch(()=>{});pk.classList.toggle('l',r.dataset.ar==='l');pk.classList.add('on')});
-      r.addEventListener('mouseleave',()=>{pk.classList.remove('on');pv.pause()});
-    });
-    addEventListener('mousemove',e=>{tx=e.clientX+36;ty=e.clientY-pk.offsetHeight/2});
-    (function f(){px+=(tx-px)*.14;py+=(ty-py)*.14;pk.style.transform=`translate(${px}px,${py}px) rotate(${(tx-px)*.04}deg)`;requestAnimationFrame(f)})();
-  }
-
   /* elementy sterowane scrollem */
-  const words=$$('[data-words]'),tl=$('.tl'),steps=$$('.step'),bar=$('#bar');
+  const words=$$('[data-words]'),tl=$('.tl'),steps=$$('.step'),bar=$('#bar'),pars=$$('[data-par]'),trk=$('.track');
   const cl=(v,a,b)=>Math.min(b,Math.max(a,v));
   function onScroll(){
     words.forEach(el=>{
@@ -50,6 +43,8 @@ export function initSections(){
       for(let i=0;i<sp.length;i++)sp[i].classList.toggle('lit',i<n);
     });
     if(tl){const r=tl.getBoundingClientRect(),p=cl((innerHeight*.78-r.top)/(innerHeight*.5),0,1);tl.style.setProperty('--p',p);steps.forEach((s,i)=>s.classList.toggle('on',p>i/4+.04))}
+    pars.forEach(el=>{const r=el.parentElement.getBoundingClientRect(),d=(r.top+r.height/2-innerHeight/2)/innerHeight;el.style.setProperty('--py',(d*el.dataset.par*-80).toFixed(1)+'px')});
+    if(trk){const w=trk.parentElement,sr=w.getBoundingClientRect(),p=cl((innerHeight-sr.top)/(innerHeight+sr.height),0,1),mx=Math.max(0,trk.scrollWidth-w.clientWidth);trk.style.transform=`translateX(${(-p*mx).toFixed(1)}px)`}
     bar.style.transform=`scaleX(${scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)})`;
   }
   addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
