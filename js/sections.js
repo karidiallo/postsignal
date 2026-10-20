@@ -29,6 +29,18 @@ export function initSections(){
     el.addEventListener('pointerleave',()=>{el.style.transform=''});
   });
 
+  /* podgląd klipu pod kursorem na liście formatów */
+  const pk=document.createElement('div');pk.className='peek';pk.innerHTML='<video muted loop playsinline></video>';document.body.appendChild(pk);
+  const pv=pk.firstChild;let tx=0,ty=0,px=0,py=0;
+  if(hoverOK){
+    $$('.row').forEach(r=>{
+      r.addEventListener('mouseenter',()=>{pv.src=r.dataset.v;pv.play().catch(()=>{});pk.classList.toggle('l',r.dataset.ar==='l');pk.classList.add('on')});
+      r.addEventListener('mouseleave',()=>{pk.classList.remove('on');pv.pause()});
+    });
+    addEventListener('mousemove',e=>{tx=e.clientX+36;ty=e.clientY-pk.offsetHeight/2});
+    (function f(){px+=(tx-px)*.14;py+=(ty-py)*.14;pk.style.transform=`translate(${px}px,${py}px) rotate(${(tx-px)*.04}deg)`;requestAnimationFrame(f)})();
+  }
+
   /* elementy sterowane scrollem */
   const words=$$('[data-words]'),tl=$('.tl'),steps=$$('.step'),bar=$('#bar');
   const cl=(v,a,b)=>Math.min(b,Math.max(a,v));
