@@ -242,6 +242,9 @@ body.nobg{background:linear-gradient(120deg,#0a0c08,#14402c,#c9ad74,#14402c,#0a0
 .sec .wrap>.banner,.sec .wrap>.bleed,#contact .wrap>.cta-in,.sec .wrap>.reels{grid-column:1/-1}
 .eyebrow{font-stretch:100%;font-weight:600;font-size:12px;letter-spacing:.04em;text-transform:none;color:var(--mute)}
 .eyebrow::before{counter-increment:s;content:"(" counter(s,decimal-leading-zero) ")  ";color:var(--acc)}
+/* odstęp eyebrow -> nagłówek (v4 zerował margines H2, więc etykieta dotykała tytułu) */
+.eyebrow{display:block;margin:0 0 clamp(18px,2.4vw,32px);line-height:1.3}
+.sec .wrap>.eyebrow{margin-bottom:0;padding-top:.5em} /* desktop: etykieta w lewej kolumnie, wyrównana do góry H2 */
 .sec em{font-style:normal;color:var(--acc)}
 .h2{font-stretch:100%;font-weight:700;font-size:clamp(34px,5.4vw,84px);line-height:.96;letter-spacing:-.04em;text-transform:none;max-width:13ch;margin:0 0 48px;text-align:left}
 .h2 em{color:var(--fg);padding:0 .14em;margin:0 -.14em;background:linear-gradient(var(--acc),var(--acc)) left center/0% 100% no-repeat;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background-size .9s cubic-bezier(.7,0,.2,1) .35s,color .3s .7s}
@@ -294,12 +297,12 @@ body.nobg{background:linear-gradient(120deg,#0a0c08,#14402c,#c9ad74,#14402c,#0a0
 .step p{font-size:15px;color:var(--mute)}
 
 .cta-in{padding:0;border:0;background:none}
-.cta-l .h2{margin-bottom:26px}.cta-l .eyebrow{position:static}
+.cta-l .h2{margin-bottom:26px}.cta-l .eyebrow{position:static;margin-bottom:clamp(20px,2.6vw,34px);padding-top:0}
 #form{border-radius:14px;background:rgba(6,8,6,.55)}#form input,#form textarea{border-radius:8px}
 
 @media(max-width:900px){
   .sec .wrap{grid-template-columns:1fr}.sec .wrap>*{grid-column:1}
-  .sec .wrap>.eyebrow{position:static;grid-row:auto;margin-bottom:20px}
+  .sec .wrap>.eyebrow{position:static;grid-row:auto;margin-bottom:clamp(18px,4vw,26px);padding-top:0}
   .reels{grid-template-columns:1fr}.vc{height:56vh}
   .steps{grid-template-columns:1fr 1fr}.step{min-height:240px;border-bottom:1px solid rgba(255,255,255,.18)}
   .strike p:nth-child(n){margin-left:0}
