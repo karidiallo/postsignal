@@ -23,10 +23,10 @@ const MEDIA=[
 const TEXT={
  en:[
   {kind:'Reels & short-form video',brand:'POP2UP',title:'Give people a reason to learn more.',desc:'Short-form videos designed to capture attention and communicate your offer.',result:''},
-  {kind:'Campaign & brand visuals',brand:'Perla',title:'Consistent across every placement.',desc:'Supporting visual content that keeps your communication consistent across the formats you need.',result:''},
+  {kind:'Campaign & brand visuals',brand:'Perła',title:'Consistent across every placement.',desc:'Supporting visual content that keeps your communication consistent across the formats you need.',result:''},
   {kind:'Advertising creatives',brand:'Mozaika',title:'Make the value understandable.',desc:'Visual assets for campaigns that need to communicate a clear offer and motivate the next step.',result:''},
-  {kind:'Campaign & brand visuals',brand:'',title:'Show the experience.',desc:'Give people a reason to imagine themselves at your hotel, in your restaurant or receiving your treatment.',result:''},
-  {kind:'UGC-style content',brand:'',title:'Closer to a real customer experience.',desc:'Natural, relatable content that presents your product or service the way a customer would.',result:''}
+  {kind:'UGC-style content',brand:'',title:'Show the experience.',desc:'Give people a reason to imagine themselves at your hotel, in your restaurant or receiving your treatment.',result:''},
+  {kind:'Campaign & brand visuals',brand:'',title:'Closer to a real customer experience.',desc:'Natural, relatable content that presents your product or service the way a customer would.',result:''}
  ],
  pl:[
   {kind:'Reelsy i krótkie formy wideo',brand:'POP2UP',title:'Daj ludziom powód, by dowiedzieli się więcej.',desc:'Krótkie wideo stworzone, by przyciągać uwagę i jasno komunikować Twoją ofertę.',result:''},
