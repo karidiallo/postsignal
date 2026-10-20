@@ -112,7 +112,7 @@ export function createWorld(canvas,items,hooks){
       m.visible=m.material.opacity>.01;
       if(u.video){
         const pre=s&&dist>1&&dist<26,on=s&&dist>1&&dist<14;   /* ładuje z wyprzedzeniem, gra tylko w zasięgu kamery */
-        if(pre&&!u.loaded){u.loaded=true;u.video.src=u.it.preview;u.video.load()}
+        if(pre&&!u.loaded){u.loaded=true;u.video.src=u.it.preview;u.video.load();setTimeout(()=>{u.ready=true},3000)}
         if(on){if(u.video.paused)u.video.play().catch(()=>{})}
         else if(!u.video.paused)u.video.pause();
       }
