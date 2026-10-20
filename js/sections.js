@@ -5,7 +5,7 @@ export function initSections(){
   /* tekst rozjaśniany słowo po słowie wraz ze scrollem */
   $$('[data-words]').forEach(el=>{
     const ws=el.textContent.trim().split(/\s+/);el.textContent='';
-    ws.forEach(w=>{const s=document.createElement('span');s.textContent=w+' ';el.appendChild(s)});
+    ws.forEach(w=>{const s=document.createElement('span');s.textContent=w+' ';if(/^(guest|patient|hotels|clinics|decision|treatment|dinner|weekend|contact)/i.test(w))s.className='k';el.appendChild(s)});
   });
 
   /* trzy zasady: lista po lewej, duży panel po prawej */
