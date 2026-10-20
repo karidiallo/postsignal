@@ -9,7 +9,11 @@ export function initMenu(){
     else if(id==='work')scrollTo({top:innerHeight*.5,behavior:'smooth'});   /* początek portfolio (hero znika, pierwsza karta) */
     else{const el=$('#'+id);if(el)el.scrollIntoView({behavior:'smooth'})}
   };
-  document.querySelectorAll('[data-nav]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(a.dataset.nav)}));
+  const burger=$('#burger'),setMenu=o=>{document.body.classList.toggle('menu-open',o);if(burger)burger.setAttribute('aria-expanded',o)};
+  if(burger){burger.addEventListener('click',()=>setMenu(!document.body.classList.contains('menu-open')));
+    addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+    matchMedia('(min-width:981px)').addEventListener('change',e=>{if(e.matches)setMenu(false)})}
+  document.querySelectorAll('[data-nav]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();setMenu(false);go(a.dataset.nav)}));
   /* podświetla aktualną sekcję; tło nagłówka włącza się, gdy zaczyna się treść pod portfolio */
   const spy=()=>{
     let cur='work';
@@ -87,7 +91,9 @@ export function initForm(){
     if(f.elements._hp.value)return;
     const name=f.elements.name,email=f.elements.email,phone=f.elements.phone;
     [name,email,phone].forEach(i=>i.classList.remove('invalid'));
+    const cons=f.elements.consent,consL=cons.closest('.consent');consL.classList.remove('invalid');
     let bad=false;
+    if(!cons.checked){consL.classList.add('invalid');bad=true;if(name.value.trim()&&/^\S+@\S+\.\S+$/.test(email.value.trim())){st.textContent=T.consent;return}}
     if(!name.value.trim()){name.classList.add('invalid');bad=true}
     if(!/^\S+@\S+\.\S+$/.test(email.value.trim())){email.classList.add('invalid');bad=true}
     if(phone.value.trim()&&!/^[+\d][\d\s()-]{6,}$/.test(phone.value.trim())){phone.classList.add('invalid');bad=true}
