@@ -11,12 +11,19 @@ body{background:transparent;color:var(--fg);font-family:"Archivo","Arial Black",
 /* header */
 header{top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(rgba(0,0,0,.45),transparent)}
 header img{height:40px;width:auto;display:block}
+.hr{display:flex;align-items:center;gap:16px}
 nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;transition:opacity .4s}
 body.end nav{opacity:0;pointer-events:none}
 nav button{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.28);color:var(--fg);font:inherit;font-stretch:112%;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:9px 17px;border-radius:99px;cursor:pointer;transition:.25s}
 nav button:hover{border-color:var(--fg)}
 nav button.on{background:var(--acc);color:#0b0b09;border-color:var(--acc)}
 nav button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.lang{display:flex;align-items:center;gap:6px}
+.lang a{display:block;width:34px;height:34px;padding:5px;border-radius:50%;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.28);opacity:.6;transition:opacity .25s,border-color .25s,transform .25s}
+.lang a img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
+.lang a:hover{opacity:1;border-color:var(--fg);transform:translateY(-1px)}
+.lang a.on{opacity:1;border-color:var(--acc);box-shadow:0 0 0 1px var(--acc)}
+.lang a:focus-visible{outline:2px solid var(--acc);outline-offset:2px;opacity:1}
 
 /* buttons */
 .btn{display:inline-block;background:var(--acc);color:#0b0b09;border:0;border-radius:99px;font:inherit;font-stretch:118%;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:17px 28px;cursor:pointer;transition:transform .2s,filter .2s}
@@ -220,7 +227,9 @@ body.nobg{background:linear-gradient(120deg,#0a0c08,#14402c,#c9ad74,#14402c,#0a0
   .tl::after{width:calc(var(--p)*100%)}
 }
 @media(max-width:640px){
-  header{padding:16px 18px}header img{height:30px}
+  header{padding:16px 18px;flex-wrap:wrap;row-gap:10px}header img{height:30px}
+  .hr{display:contents}.lang{order:2;margin-left:auto}nav{order:3;flex-basis:100%;justify-content:flex-start}
+  .lang a{width:30px;height:30px;padding:4px}
   #cap{top:auto;bottom:84px;left:28px;width:auto;right:28px;translate:none}
   #hero{padding:0 18px}#hero .sub{max-width:none}.hero-act .note{display:none}
   .hero-foot{left:18px;right:18px;bottom:22px;grid-template-columns:1fr}.hero-foot span:nth-child(2),.hero-foot span:nth-child(3){display:none}
