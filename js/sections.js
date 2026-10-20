@@ -16,7 +16,7 @@ export function initSections(){
   setAcc(0);
 
   /* rozsuwane panele branż */
-  const PV=['pop2up','perla','mozaika','video43'],pans=$$('.pan');
+  const PV=['empty','empty','mozaika','video43'],pans=$$('.pan');
   pans.forEach((p,i)=>{const v=document.createElement('video');Object.assign(v,{muted:true,loop:true,playsInline:true,preload:'none'});v.dataset.src=BASE+'assets/work/'+PV[i]+'-preview.mp4';v.poster=BASE+'assets/work/'+PV[i]+'-poster.webp';p.prepend(v)});
   const setPan=i=>pans.forEach((p,k)=>{p.classList.toggle('open',k===i);const v=p.querySelector('video');if(!v)return;if(k===i){if(!v.src)v.src=v.dataset.src;v.play().catch(()=>{})}else v.pause()});
   /* wideo startuje tylko w widoku */
