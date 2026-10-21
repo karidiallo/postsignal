@@ -1,154 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-base="">
 <head>
 <meta charset="utf-8">
-
 <script type="importmap">{"imports":{"three":"./js/vendor/three.module.min.js"}}</script>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PostSignal – Content that makes people choose you</title>
-<meta name="description" content="Reels, advertising creatives and UGC-style content for beauty brands, aesthetic clinics, hotels, guesthouses and restaurants.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PostSignal — Content with purpose. Made to work.</title>
+<meta name="description" content="We create Reels, advertising creatives and photo-video content for beauty brands, aesthetic clinics, hotels and restaurants — from concept to a practical plan for using it.">
 <link rel="canonical" href="https://postsignal.eu/">
 <link rel="alternate" hreflang="en" href="https://postsignal.eu/">
 <link rel="alternate" hreflang="pl" href="https://postsignal.eu/pl/">
 <link rel="alternate" hreflang="x-default" href="https://postsignal.eu/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="PostSignal">
-<meta property="og:title" content="PostSignal – Content that makes people choose you">
-<meta property="og:description" content="Reels, advertising creatives and UGC-style content for beauty brands, aesthetic clinics, hotels, guesthouses and restaurants.">
+<meta property="og:title" content="PostSignal — Content with purpose. Made to work.">
+<meta property="og:description" content="We create Reels, advertising creatives and photo-video content for beauty brands, aesthetic clinics, hotels and restaurants — from concept to a practical plan for using it.">
 <meta property="og:url" content="https://postsignal.eu/">
 <meta property="og:locale" content="en_GB"><meta property="og:locale:alternate" content="pl_PL">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
-<link rel="modulepreload" href="./js/vendor/three.module.min.js"><link rel="stylesheet" href="css/style.css?v=20261022">
+<link rel="modulepreload" href="./js/vendor/three.module.min.js"><link rel="stylesheet" href="./css/style.css?v=20261022">
 </head>
 <body>
-<video id="bgv" src="assets/video/bg.mp4" poster="assets/video/bg-poster.webp" autoplay muted loop playsinline preload="auto"></video>
+<video id="bgv" src="./assets/video/bg.mp4" poster="./assets/video/bg-poster.webp" autoplay muted loop playsinline preload="auto"></video>
 <canvas id="gl"></canvas>
 <div id="sigil" aria-hidden="true"><div class="sg" id="sg"><i class="b"></i><i class="w w0"></i><i class="w w1"></i><i class="w w2"></i><i class="p p1"></i><i class="p p2"></i><i class="g"></i></div></div>
 <div id="bar"></div>
-
 <header class="ui">
-  <a class="logo" href="./" data-nav="top" aria-label="PostSignal"><img src="assets/img/logo.png" alt="PostSignal"></a>
+  <a class="logo" href="./" data-nav="top" aria-label="PostSignal"><img src="./assets/img/logo.png" alt="PostSignal"></a>
   <div class="hr">
-    <nav id="menu" aria-label="Main"><a href="#work" data-nav="work">Work</a><a href="#who" data-nav="who">Clients</a><a href="#create" data-nav="create">Services</a><a href="#how" data-nav="how">Process</a><a class="cta" href="#contact" data-nav="contact">Contact</a><div class="mlegal" aria-label="Legal"><a href="privacy-policy/">Privacy Policy</a><a href="cookie-policy/">Cookie Policy</a><a href="terms/">Terms of Use</a></div></nav>
+    <nav id="menu" aria-label="Main navigation"><a href="#work" data-nav="work">Work</a><a href="#who" data-nav="who">Who it's for</a><a href="#create" data-nav="create">What we create</a><a href="#how" data-nav="how">Process</a><a class="cta" href="#contact" data-nav="contact">Let’s talk</a></nav>
     <div class="lang" role="group" aria-label="Language">
-      <a href="./" hreflang="en" lang="en" class="on" aria-current="true" aria-label="English" title="English"><img src="assets/img/flag-gb.svg" alt="" width="22" height="22"></a>
-      <a href="pl/" hreflang="pl" lang="pl" aria-label="Polski" title="Polski"><img src="assets/img/flag-pl.svg" alt="" width="22" height="22"></a>
+      <a href="./" hreflang="en" lang="en" class="on" aria-current="true" aria-label="English" title="English"><img src="./assets/img/flag-gb.svg" alt="" width="22" height="22"></a>
+      <a href="./pl/" hreflang="pl" lang="pl" aria-label="Polski" title="Polski"><img src="./assets/img/flag-pl.svg" alt="" width="22" height="22"></a>
     </div>
-    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </div>
 </header>
-
 <div id="hero" class="ui">
   <div class="hero-meta"><span>Content production</span><i></i><span>For your brand</span></div>
-  <h1>
-    <span class="ln">Reels.</span>
-    <span class="ln">Ads.</span>
-    <span class="ln acc">UGC.</span>
-  </h1>
+  <h1><span class="ln">More than</span><span class="ln">just</span><span class="ln acc">content.</span></h1>
   <div class="rule"></div>
-  <div class="hero-act"><a class="btn" href="#contact" data-goto="contact">Tell us about your business →</a><span class="note">No generic content packages. Just a conversation about what your brand needs.</span></div>
-  <div class="hero-foot"><span class="scroll"><i></i>Scroll</span><span>Content for brands people choose</span><span></span></div>
+  <p class="sub">We create photo and video content — then help you put it to work with a clear purpose.</p>
+  <div class="hero-act"><a class="btn" href="#contact" data-goto="contact">Tell us about your business →</a><span class="note">No fixed packages. We shape the scope around your brand, goals and the content you actually need.</span></div>
+  <div class="hero-foot"><span class="scroll"><i></i>Scroll to explore</span><span>From idea to content ready to use</span><span></span></div>
 </div>
-
 <div id="cap" class="ui"><div class="idx"><span id="c-idx"></span><i></i></div><div class="tag" id="c-tag"></div><h2 id="c-title"></h2><p id="c-desc"></p><span class="res" id="c-res"></span></div>
-
-<button id="talk" type="button" aria-label="Skip to contact">Let’s talk<span class="dot" aria-hidden="true">↓</span></button>
-
+<button id="talk" type="button" aria-label="Go to contact">Let’s talk<span class="dot" aria-hidden="true">↓</span></button>
 <div id="spacer"></div>
-
 <main id="content">
-
 <section class="sec" id="decision"><div class="wrap">
   <p class="eyebrow" data-r>The customer decision</p>
-  <h2 class="h2" data-r>People can’t choose what they don’t <em>understand.</em></h2>
-  <p class="words" data-words>Your content decides before they ever contact you.</p>
+  <h2 class="h2" data-r>People choose brands that know how to <em>show their value.</em></h2>
+  <p class="words" data-words>Good content doesn’t end at publishing. It helps people understand your offer, feel your brand and take the next step.</p>
   <div class="reels">
-    <article class="vc" data-r data-par="1"><video poster="assets/work/pop2up-poster.webp" data-src="assets/work/pop2up-preview.mp4" muted loop playsinline preload="none"></video><span class="k">01</span><h3>Show the <em>experience.</em></h3></article>
-    <article class="vc" data-r data-par="-1"><video poster="assets/work/mozaika-poster.webp" data-src="assets/work/mozaika-preview.mp4" muted loop playsinline preload="none"></video><span class="k">02</span><h3>Build <em>confidence.</em></h3></article>
-    <article class="vc" data-r data-par="1"><video poster="assets/work/notseen-poster.webp" data-src="assets/work/notseen-preview.mp4" muted loop playsinline preload="none"></video><span class="k">03</span><h3>Be <em>memorable.</em></h3></article>
+    <article class="vc" data-r data-par="1"><video poster="./assets/work/pop2up-poster.webp" data-src="./assets/work/pop2up-preview.mp4" muted loop playsinline preload="none"></video><span class="k">01</span><h3>Show the <em>experience.</em></h3></article>
+    <article class="vc" data-r data-par="-1"><video poster="./assets/work/mozaika-poster.webp" data-src="./assets/work/mozaika-preview.mp4" muted loop playsinline preload="none"></video><span class="k">02</span><h3>Build <em>trust.</em></h3></article>
+    <article class="vc" data-r data-par="1"><video poster="./assets/work/notseen-poster.webp" data-src="./assets/work/notseen-preview.mp4" muted loop playsinline preload="none"></video><span class="k">03</span><h3>Stay <em>memorable.</em></h3></article>
   </div>
 </div></section>
-
 <section class="sec" id="who"><div class="wrap">
   <p class="eyebrow" data-r>Who we work with</p>
-  <h2 class="h2" data-r>Different businesses. Different <em>reasons to choose</em> them.</h2>
+  <h2 class="h2" data-r>Different businesses. Different <em>reasons to choose them.</em></h2>
   <div class="fan" data-r>
-    <article class="pan" tabindex="0"><span class="pn">01</span><span class="vt">Beauty &amp; aesthetic clinics</span>
-      <div class="pan-body"><h3>Beauty &amp; aesthetic clinics</h3><p class="subh">Make your expertise visible.</p><p>Show your treatments, your approach, your team and the details that help potential clients understand your services and feel more confident about booking.</p><p class="ideas"><b>Content ideas</b>Treatment explainers, specialist-led videos, clinic tours, service-focused Reels and advertising creatives.</p></div></article>
-    <article class="pan" tabindex="0"><span class="pn">02</span><span class="vt">Hotels &amp; guesthouses</span>
-      <div class="pan-body"><h3>Hotels &amp; guesthouses</h3><p class="subh">Help guests picture their stay before they book.</p><p>Show the rooms, atmosphere, location, amenities and small details that make your property worth choosing over another option.</p><p class="ideas"><b>Content ideas</b>Room tours, property walkthroughs, guest-experience videos, seasonal offers and destination content.</p></div></article>
-    <article class="pan" tabindex="0"><span class="pn">03</span><span class="vt">Restaurants &amp; hospitality</span>
-      <div class="pan-body"><h3>Restaurants &amp; hospitality</h3><p class="subh">Give people a reason to come in.</p><p>Show the food, the atmosphere, the preparation and the experience behind your place — not just another photo of a dish.</p><p class="ideas"><b>Content ideas</b>Food-focused Reels, kitchen footage, signature dishes, venue atmosphere and promotional creatives.</p></div></article>
-    <article class="pan" tabindex="0"><span class="pn">04</span><span class="vt">Lifestyle &amp; others</span>
-      <div class="pan-body"><h3>Beauty brands &amp; other customer-facing businesses</h3><p class="subh">Show what makes your brand worth trying.</p><p>We develop visual content around your products, services and customer experience, tailored to your audience and the way they discover and evaluate brands.</p></div></article>
+    <article class="pan" tabindex="0"><span class="pn">01</span><span class="vt">Beauty & aesthetic clinics</span><div class="pan-body"><h3>Beauty & aesthetic clinics</h3><p class="subh">Show your expertise before the appointment.</p><p>Present treatments, your team and your approach in a way that helps people understand your offer and feel more confident.</p><p class="ideas"><b>Content ideas</b>Clinic visits, specialist-led explainers, service Reels and advertising creatives.</p></div></article>
+    <article class="pan" tabindex="0"><span class="pn">02</span><span class="vt">Hotels & guesthouses</span><div class="pan-body"><h3>Hotels & guesthouses</h3><p class="subh">Let guests picture the stay before they book.</p><p>Show the rooms, atmosphere, location and details that make the guest experience worth choosing.</p><p class="ideas"><b>Content ideas</b>Property films, room showcases, guest experiences, seasonal offers and local highlights.</p></div></article>
+    <article class="pan" tabindex="0"><span class="pn">03</span><span class="vt">Restaurants & hospitality</span><div class="pan-body"><h3>Restaurants & hospitality</h3><p class="subh">Show people what makes the place worth visiting.</p><p>Capture the food, atmosphere and character of your venue — not just another shot of a dish.</p><p class="ideas"><b>Content ideas</b>Food Reels, behind-the-scenes kitchen footage, signature dishes, venue atmosphere and promotional creatives.</p></div></article>
+    <article class="pan" tabindex="0"><span class="pn">04</span><span class="vt">Brands & service businesses</span><div class="pan-body"><h3>Brands & service businesses</h3><p class="subh">Turn what makes you different into visuals.</p><p>We create content shaped around your product, service, audience and how people discover brands.</p></div></article>
   </div>
 </div></section>
-
 <section class="sec" id="create"><div class="wrap">
   <p class="eyebrow" data-r>What we create</p>
-  <h2 class="h2" data-r>The right <em>format</em> for the job.</h2>
-  <div class="bleed"><div class="track"><div class="tile2 p"><video poster="assets/work/pop2up-poster.webp" data-src="assets/work/pop2up-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Reels · 9:16</span></div><div class="tile2 l"><video poster="assets/work/perla-poster.webp" data-src="assets/work/perla-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Campaign · 16:9</span></div><div class="tile2 p"><video poster="assets/work/mozaika-poster.webp" data-src="assets/work/mozaika-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Ads</span></div><div class="tile2 l"><video poster="assets/work/video43-poster.webp" data-src="assets/work/video43-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Brand visuals · 4:3</span></div><div class="tile2 p"><video poster="assets/work/notseen-poster.webp" data-src="assets/work/notseen-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">UGC-style</span></div></div></div>
+  <h2 class="h2" data-r>The right format. <em>A clear purpose.</em></h2>
+  <div class="bleed"><div class="track"><div class="tile2 p"><video poster="./assets/work/pop2up-poster.webp" data-src="./assets/work/pop2up-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Reels · 9:16</span></div><div class="tile2 l"><video poster="./assets/work/perla-poster.webp" data-src="./assets/work/perla-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Campaigns · 16:9</span></div><div class="tile2 p"><video poster="./assets/work/mozaika-poster.webp" data-src="./assets/work/mozaika-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Ad creatives</span></div><div class="tile2 l"><video poster="./assets/work/video43-poster.webp" data-src="./assets/work/video43-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">Photography & brand visuals</span></div><div class="tile2 p"><video poster="./assets/work/notseen-poster.webp" data-src="./assets/work/notseen-preview.mp4" muted loop playsinline preload="none"></video><span class="chip">UGC-style content</span></div></div></div>
 </div></section>
-
 <section class="sec" id="difference"><div class="wrap">
-  <p class="eyebrow" data-r>The difference</p>
-  <h2 class="h2" data-r>Not content to <em>fill your feed.</em></h2>
-  <div class="strike"><p data-r>Another video.</p><p data-r>Another graphic.</p><p data-r>Another forgotten post.</p></div>
-  <p class="banner" data-r>Every piece has <em>a reason to exist.</em></p>
+  <p class="eyebrow" data-r>Our approach</p>
+  <h2 class="h2" data-r>We don’t create content <em>just to fill a feed.</em></h2>
+  <div class="strike"><p data-r>Another video.</p><p data-r>Another graphic.</p><p data-r>Another post without a plan.</p></div>
+  <p class="banner" data-r>Every asset has <em>a clear role.</em></p>
 </div></section>
-
 <section class="sec" id="how"><div class="wrap">
   <p class="eyebrow" data-r>How we work</p>
-  <h2 class="h2" data-r>From idea to <em>content ready to use.</em></h2>
+  <h2 class="h2" data-r>From the first idea to <em>content ready to use.</em></h2>
   <div class="tl"><div class="steps">
-    <article class="step"><span class="sn">01</span><h3>Tell us about <em>your business</em></h3><p>Offer, audience, goal.</p></article>
-    <article class="step"><span class="sn">02</span><h3>Define the <em>direction</em></h3><p>Message, format, approach.</p></article>
-    <article class="step"><span class="sn">03</span><h3>We <em>create</em></h3><p>Produced to the agreed scope.</p></article>
-    <article class="step"><span class="sn">04</span><h3>You <em>use it</em></h3><p>Delivered, ready to publish.</p></article>
+    <article class="step"><span class="sn">01</span><h3>We learn about <em>your business</em></h3><p>Your offer, audience and goal.</p></article>
+    <article class="step"><span class="sn">02</span><h3>We set the <em>direction</em></h3><p>Message, format and concept.</p></article>
+    <article class="step"><span class="sn">03</span><h3>We create the <em>assets</em></h3><p>Production within the agreed scope.</p></article>
+    <article class="step"><span class="sn">04</span><h3>We help you <em>put them to work</em></h3><p>Publish-ready files and guidance aligned with the project scope.</p></article>
   </div></div>
 </div></section>
-
 <section class="sec" id="contact"><div class="wrap"><div class="cta-in">
   <div class="cta-l" data-r>
-    <p class="eyebrow">Let’s talk about your project</p>
-    <h2 class="h2">Let’s find the right <em>content direction</em> for your business.</h2>
-    <p class="body">Tell us about your business. We’ll come back with a relevant content idea.</p>
+    <p class="eyebrow">Start with a conversation</p>
+    <h2 class="h2">Let’s find the content that fits <em>your business.</em></h2>
+    <p class="body">Tell us what your brand does and what you want to achieve. We’ll come back with a direction and a scope tailored to your project.</p>
     <a class="mail" href="mailto:contact@postsignal.eu">contact@postsignal.eu</a>
   </div>
   <form id="form" novalidate data-r>
-    <div class="row"><input name="name" placeholder="Name" aria-label="Name" autocomplete="name" required><input name="email" type="email" placeholder="Email" aria-label="Email" autocomplete="email" required></div>
+    <div class="row"><input name="name" placeholder="Your name" aria-label="Your name" autocomplete="name" required><input name="email" type="email" placeholder="Email address" aria-label="Email address" autocomplete="email" required></div>
     <div class="row"><input name="brand" placeholder="Brand / company" aria-label="Brand or company" autocomplete="organization"><input name="phone" type="tel" placeholder="Phone (optional)" aria-label="Phone, optional" autocomplete="tel"></div>
-    <p class="flabel">What are you looking for?</p>
-    <div class="chips" role="group" aria-label="What are you looking for?">
-      <label><input type="checkbox" name="topic" value="Reels & short-form video"><span>Reels &amp; short-form video</span></label>
+    <p class="flabel">What do you need?</p>
+    <div class="chips" role="group" aria-label="What do you need?">
+      <label><input type="checkbox" name="topic" value="Reels and short-form video"><span>Reels & short-form video</span></label>
       <label><input type="checkbox" name="topic" value="Advertising creatives"><span>Advertising creatives</span></label>
       <label><input type="checkbox" name="topic" value="UGC-style content"><span>UGC-style content</span></label>
-      <label><input type="checkbox" name="topic" value="A combination of formats"><span>A combination of formats</span></label>
-      <label><input type="checkbox" name="topic" value="Not sure yet"><span>Not sure yet</span></label>
+      <label><input type="checkbox" name="topic" value="Photography and brand visuals"><span>Photography & brand visuals</span></label>
+      <label><input type="checkbox" name="topic" value="Combination of formats"><span>A combination of formats</span></label>
+      <label><input type="checkbox" name="topic" value="Not sure yet"><span>I’d like a recommendation</span></label>
     </div>
-    <textarea name="msg" rows="3" placeholder="Tell us a little about your project (optional)" aria-label="Project details, optional"></textarea>
-    <label class="consent"><input type="checkbox" name="consent" required><span>I have read the <a href="privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
+    <textarea name="msg" rows="3" placeholder="What is the goal of the project, or what would you like to improve? (optional)" aria-label="Project goal, optional"></textarea>
     <input class="hp" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <button type="submit" class="btn">Send inquiry →</button>
+    <button type="submit" class="btn">Send an enquiry →</button>
     <p id="fstatus" role="status"></p>
   </form>
 </div></div></section>
-
 </main>
-
 <footer class="site-foot"><div class="wrap">
-  <div class="fgrid">
-    <div><img src="assets/img/logo.png" alt="PostSignal" class="flogo"></div>
-    <div class="fr"><a href="mailto:contact@postsignal.eu">contact@postsignal.eu</a><button type="button" id="totop">Back to top ↑</button></div>
-  </div>
-  <div class="fbottom"><p class="copy">© 2026 PostSignal</p><nav class="flinks" aria-label="Legal"><a href="privacy-policy/">Privacy Policy</a><a href="cookie-policy/">Cookie Policy</a><a href="terms/">Terms of Use</a></nav></div>
+  <div class="fgrid"><div><img src="./assets/img/logo.png" alt="PostSignal" class="flogo"></div><div class="fr"><a href="mailto:contact@postsignal.eu">contact@postsignal.eu</a><button type="button" id="totop">Back to top ↑</button></div></div>
+  <p class="copy">© 2026 PostSignal</p>
 </div></footer>
-
 <div id="cursor" aria-hidden="true"><span>Play</span></div>
 <div id="modal" role="dialog" aria-modal="true"><div class="box" id="box"></div></div>
-
-<script type="module" src="js/main.js"></script>
+<script type="module" src="./js/main.js"></script>
 </body>
 </html>
