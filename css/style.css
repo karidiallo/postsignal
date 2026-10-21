@@ -455,3 +455,15 @@ html,body{overflow-x:clip}
   .hero-foot{display:none}
   nav#menu{justify-content:flex-start}
 }
+
+/* ===== v6: kroki procesu – równe wyrównanie (numer / tytuł / opis w wspólnych rzędach) ===== */
+.step{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0;align-content:start;min-height:0;justify-content:stretch}
+.step .sn{align-self:start}
+.step h3{margin:28px 0 14px;text-wrap:balance;hyphens:manual}
+.step p{margin:0;text-wrap:pretty}
+@media(max-width:640px){
+  .step{grid-row:auto;grid-template-rows:none;row-gap:0}
+  .step h3{margin:18px 0 10px}
+}
+.step h3{font-size:clamp(20px,1.95vw,28px)}
+@media(max-width:640px){.step h3{font-size:24px}}
