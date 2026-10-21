@@ -2,7 +2,7 @@
 
 /* Formularz: wklej endpoint z formspree.io (https://formspree.io/f/xxxxxxx), a zgłoszenia będą przychodzić na maila.
    Puste = formularz otworzy program pocztowy z gotową wiadomością. */
-export const FORM_ENDPOINT='';
+export const FORM_ENDPOINT='https://formspree.io/f/xljgqwgy';
 export const MAIL='contact@postsignal.eu';
 
 import {T} from './i18n.js';
