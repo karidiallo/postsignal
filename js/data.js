@@ -15,8 +15,8 @@ const MEDIA=[
  {tag:'reels',poster:'assets/work/pop2up-poster.webp',preview:'assets/work/pop2up-preview.mp4',video:'assets/work/pop2up.mp4'},
  {tag:'cinematic',poster:'assets/work/perla-poster.webp',preview:'assets/work/perla-preview.mp4',video:'assets/work/perla.mp4'},
  {tag:'ads',poster:'assets/work/mozaika-poster.webp',preview:'assets/work/mozaika-preview.mp4',video:'assets/work/mozaika.mp4'},
- {tag:'cinematic',ratio:'4:3',poster:'assets/work/video43-poster.webp',preview:'assets/work/video43-preview.mp4',video:'assets/work/video43.mp4'},
- {tag:'ugc',ratio:'16:9',poster:'assets/work/notseen-poster.webp',preview:'assets/work/notseen-preview.mp4',video:'assets/work/notseen.mp4'}
+ {tag:'ugc',ratio:'4:3',poster:'assets/work/video43-poster.webp',preview:'assets/work/video43-preview.mp4',video:'assets/work/video43.mp4'},
+ {tag:'cinematic',ratio:'16:9',poster:'assets/work/notseen-poster.webp',preview:'assets/work/notseen-preview.mp4',video:'assets/work/notseen.mp4'}
 ];
 
 /* Teksty – ta sama kolejność co MEDIA. brand/result zwykle takie same w obu językach */
@@ -32,8 +32,8 @@ const TEXT={
   {kind:'Reelsy i krótkie formy wideo',brand:'POP2UP',title:'Daj ludziom powód, by dowiedzieli się więcej.',desc:'Krótkie wideo stworzone, by przyciągać uwagę i jasno komunikować Twoją ofertę.',result:''},
   {kind:'Kampanie i wizualia marki',brand:'Perla',title:'Spójnie w każdym miejscu emisji.',desc:'Uzupełniający content wizualny, który utrzymuje spójność komunikacji we wszystkich potrzebnych formatach.',result:''},
   {kind:'Kreacje reklamowe',brand:'Mozaika',title:'Spraw, by wartość była zrozumiała.',desc:'Materiały wizualne do kampanii, które jasno komunikują ofertę i motywują do następnego kroku.',result:''},
-  {kind:'Kampanie i wizualia marki',brand:'',title:'Pokaż doświadczenie.',desc:'Daj ludziom powód, by wyobrazili sobie siebie w Twoim hotelu, w Twojej restauracji lub podczas zabiegu u Ciebie.',result:''},
-  {kind:'Content w stylu UGC',brand:'',title:'Bliżej prawdziwego doświadczenia klienta.',desc:'Naturalny, bliski odbiorcom content, który pokazuje Twój produkt lub usługę tak, jak zrobiłby to klient.',result:''}
+  {kind:'Content w stylu UGC',brand:'',title:'Pokaż doświadczenie.',desc:'Daj ludziom powód, by wyobrazili sobie siebie w Twoim hotelu, w Twojej restauracji lub podczas zabiegu u Ciebie.',result:''},
+  {kind:'Kampanie i wizualia marki',brand:'',title:'Bliżej prawdziwego doświadczenia klienta.',desc:'Naturalny, bliski odbiorcom content, który pokazuje Twój produkt lub usługę tak, jak zrobiłby to klient.',result:''}
  ]
 };
 
