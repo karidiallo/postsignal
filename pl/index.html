@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script type="importmap">{"imports":{"three":"../js/vendor/three.module.min.js"}}</script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PostSignal — Content z pomysłem. Stworzony, by działać.</title>
 <meta name="description" content="Tworzymy Reelsy, materiały reklamowe i content foto-wideo dla beauty, klinik medycyny estetycznej, hoteli i restauracji. Od koncepcji po plan wykorzystania materiałów.">
 <link rel="canonical" href="https://postsignal.eu/pl/">
@@ -29,11 +29,12 @@
 <header class="ui">
   <a class="logo" href="./" data-nav="top" aria-label="PostSignal"><img src="../assets/img/logo.png" alt="PostSignal"></a>
   <div class="hr">
-    <nav id="menu" aria-label="Menu główne"><a href="#work" data-nav="work">Realizacje</a><a href="#who" data-nav="who">Dla kogo</a><a href="#create" data-nav="create">Co tworzymy</a><a href="#how" data-nav="how">Proces</a><a class="cta" href="#contact" data-nav="contact">Porozmawiajmy</a></nav>
+    <nav id="menu" aria-label="Menu główne"><a href="#work" data-nav="work">Realizacje</a><a href="#who" data-nav="who">Dla kogo</a><a href="#create" data-nav="create">Co tworzymy</a><a href="#how" data-nav="how">Proces</a><a class="cta" href="#contact" data-nav="contact">Porozmawiajmy</a><div class="mlegal" aria-label="Informacje prawne"><a href="polityka-prywatnosci/">Polityka prywatności</a><a href="polityka-cookies/">Polityka cookies</a><a href="regulamin/">Regulamin</a></div></nav>
     <div class="lang" role="group" aria-label="Język">
       <a href="../" hreflang="en" lang="en" aria-label="English" title="English"><img src="../assets/img/flag-gb.svg" alt="" width="22" height="22"></a>
       <a href="./" hreflang="pl" lang="pl" class="on" aria-current="true" aria-label="Polski" title="Polski"><img src="../assets/img/flag-pl.svg" alt="" width="22" height="22"></a>
     </div>
+    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </div>
 </header>
 <div id="hero" class="ui">
@@ -109,6 +110,7 @@
       <label><input type="checkbox" name="topic" value="Jeszcze nie wiem"><span>Potrzebuję rekomendacji</span></label>
     </div>
     <textarea name="msg" rows="3" placeholder="Jaki jest cel projektu lub co chcesz poprawić? (opcjonalnie)" aria-label="Cel projektu, opcjonalnie"></textarea>
+    <label class="consent"><input type="checkbox" name="consent" required><span>Zapoznałem(-am) się z <a href="polityka-prywatnosci/" target="_blank" rel="noopener">Polityką prywatności</a>.</span></label>
     <input class="hp" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true">
     <button type="submit" class="btn">Wyślij zapytanie →</button>
     <p id="fstatus" role="status"></p>
@@ -117,7 +119,7 @@
 </main>
 <footer class="site-foot"><div class="wrap">
   <div class="fgrid"><div><img src="../assets/img/logo.png" alt="PostSignal" class="flogo"></div><div class="fr"><a href="mailto:contact@postsignal.eu">contact@postsignal.eu</a><button type="button" id="totop">Wróć na górę ↑</button></div></div>
-  <p class="copy">© 2026 PostSignal</p>
+  <div class="fbottom"><p class="copy">© 2026 PostSignal</p><nav class="flinks" aria-label="Informacje prawne"><a href="polityka-prywatnosci/">Polityka prywatności</a><a href="polityka-cookies/">Polityka cookies</a><a href="regulamin/">Regulamin</a></nav></div>
 </div></footer>
 <div id="cursor" aria-hidden="true"><span>Odtwórz</span></div>
 <div id="modal" role="dialog" aria-modal="true"><div class="box" id="box"></div></div>
