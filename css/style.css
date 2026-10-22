@@ -10,7 +10,7 @@ body{background:transparent;color:var(--fg);font-family:"Archivo","Arial Black",
 
 /* header */
 header{top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:linear-gradient(rgba(0,0,0,.45),transparent)}
-header img{height:40px;width:auto;display:block}
+header img{height:100px;width:auto;display:block}
 .hr{display:flex;align-items:center;gap:16px}
 .logo{display:block;pointer-events:auto}
 header::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(7,8,6,.8);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(255,255,255,.08);opacity:0;transition:opacity .35s}
@@ -211,7 +211,7 @@ body.end #cap{visibility:hidden}
 .site-foot::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28) 15%,var(--acc) 50%,rgba(255,255,255,.28) 85%,transparent)}
 .site-foot .wrap{padding-top:0}
 .fgrid{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
-.flogo{height:44px;width:auto;display:block}
+.flogo{height:100px;width:auto;display:block}
 .fr{display:flex;flex-direction:column;align-items:flex-end;gap:12px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
 .fr a{color:var(--fg);text-decoration:none;border-bottom:2px solid var(--acc);padding-bottom:3px}
 .fr button{background:none;border:0;color:var(--mute);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer}
