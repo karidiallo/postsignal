@@ -1,117 +1,49 @@
-window.POSTSIGNAL_CHECKOUT_URL = window.POSTSIGNAL_CHECKOUT_URL || '';
-window.POSTSIGNAL_PROMO_CHECKOUT_URL = window.POSTSIGNAL_PROMO_CHECKOUT_URL || '';
-window.POSTSIGNAL_PROMO_SECONDS = window.POSTSIGNAL_PROMO_SECONDS || 3600;
-(()=>{
-'use strict';
+/* POSTSIGNAL SHOP V9: add checkout URLs before taking payments. */
+window.POSTSIGNAL_PROMO_CHECKOUT_URL=window.POSTSIGNAL_PROMO_CHECKOUT_URL||'';
+window.POSTSIGNAL_CHECKOUT_URL=window.POSTSIGNAL_CHECKOUT_URL||'';
+(()=>{'use strict';
 const pl=document.documentElement.lang==='pl';
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const key='postsignal_shop_offer_first_seen_v2';
-let firstSeen=Date.now();
-try{
-  const stored=Number(localStorage.getItem(key));
-  if(Number.isFinite(stored)&&stored>0&&stored<=Date.now()) firstSeen=stored;
-  else localStorage.setItem(key,String(firstSeen));
-}catch(_){/* ignore */}
-const offerSeconds=Number(window.POSTSIGNAL_PROMO_SECONDS)||3600;
-const end=firstSeen + offerSeconds*1000;
-let active=true;
-const $$=(sel)=>[...document.querySelectorAll(sel)];
-function formatClock(left){
-  const min=String(Math.floor(left/60)).padStart(2,'0');
-  const sec=String(left%60).padStart(2,'0');
-  return `${min}:${sec}`;
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const key='postsignal_shop_offer_first_seen_v2'; // reuse existing V8 expiry; no reset during upgrade
+let first=Date.now();try{const saved=Number(localStorage.getItem(key));if(Number.isFinite(saved)&&saved>0&&saved<=Date.now())first=saved;else localStorage.setItem(key,String(first));}catch(e){}
+const expiry=first+3600000;let active=false;
+function offer(){let secs=Math.max(0,Math.ceil((expiry-Date.now())/1000));active=secs>0;
+ const clock=active?String(Math.floor(secs/60)).padStart(2,'0')+':'+String(secs%60).padStart(2,'0'):(pl?'KONIEC':'ENDED');
+ $$('[data-countdown]').forEach(n=>n.textContent=clock);
+ $$('[data-offer-price]').forEach(n=>n.textContent=active?'$9.99':'$14.99');
+ $$('[data-timer-label]').forEach(n=>n.textContent=active?(pl?'DO KOŃCA OFERTY':'OFFER ENDS IN'):(pl?'CENA REGULARNA':'REGULAR PRICE'));
+ document.body.classList.toggle('offer-ended',!active);
+}offer();setInterval(offer,1000);
+function buy(e){e.preventDefault();offer();const url=active?window.POSTSIGNAL_PROMO_CHECKOUT_URL:window.POSTSIGNAL_CHECKOUT_URL;
+ if(typeof url==='string'&&/^https:\/\//i.test(url)){location.href=url;return;}
+ const subject=encodeURIComponent(pl?'Zakup ebooka PostSignal':'PostSignal ebook purchase');
+ const body=encodeURIComponent((pl?'Proszę o link do zakupu: ':'Please send a checkout link for: ')+'How to Turn Your Beauty Content Into More Bookings — '+(active?'$9.99':'$14.99'));
+ location.href='mailto:contact@postsignal.eu?subject='+subject+'&body='+body;
 }
-function updateOffer(){
-  const left=Math.max(0,Math.ceil((end-Date.now())/1000));
-  active=left>0;
-  const label=active?formatClock(left):(pl?'KONIEC':'EXPIRED');
-  $$('[data-countdown]').forEach(el=>el.textContent=label);
-  $$('[data-price-value],[data-dynamic-price]').forEach(el=>el.textContent=active?'$9.99':'$14.99');
-  document.body.classList.toggle('offer-expired',!active);
+$$('[data-buy]').forEach(el=>el.addEventListener('click',buy));
+const experience=$('.experience'),book=$('.book-book'),flat=$('.book-flat'),wrap=$('.book-wrap'),chapters=$$('.chapter'),index=$('[data-current-chapter]'),rail=$('.offer-rail'),dock=$('.buy-dock'),progress=$('.progress'),stage=$('.stage-sun');
+let last=0, raf=0, movement=0;
+const clamp=(n,a=0,b=1)=>Math.min(b,Math.max(a,n));
+const smooth=(a,b,t)=>a+(b-a)*t;
+function draw(){raf=0;const y=scrollY, viewport=innerHeight, total=document.documentElement.scrollHeight-viewport;
+ progress.style.transform=`scaleX(${total>0?clamp(y/total):0})`;
+ dock.classList.toggle('is-visible',y>viewport*.8 && y<document.documentElement.scrollHeight-viewport*1.18);
+ const rect=experience.getBoundingClientRect();const distance=Math.max(1,experience.offsetHeight-viewport);const t=clamp(-rect.top/distance);
+ const current=Math.min(3,Math.floor(Math.min(.9999,t)*4));
+ chapters.forEach((c,i)=>c.classList.toggle('is-active',i===current));index.textContent=String(current+1).padStart(2,'0');
+ if(!reduced){movement=smooth(movement,t,.15);const s=movement;
+ const reveal=clamp((s-.28)*2.0),flatten=clamp((s-.52)*2.8),exit=clamp((s-.79)*4.5);
+ const mobile=innerWidth<761;
+ wrap.style.transform=mobile?`translate3d(${(-s*3).toFixed(2)}vw,${(-s*2).toFixed(2)}vh,0) scale(${(1-s*.09).toFixed(3)})`:`translate3d(${(-s*6).toFixed(2)}vw,${(s*4).toFixed(2)}vh,0) scale(${(1-s*.08).toFixed(3)})`;
+ book.style.transform=`rotateY(${(-12-reveal*17+flatten*30).toFixed(2)}deg) rotateZ(${(-7+reveal*5+flatten*2).toFixed(2)}deg) translateY(${(-s*17).toFixed(1)}px) scale(${(1-reveal*.06).toFixed(3)})`;
+ book.style.opacity=String(clamp(1-flatten*1.3));
+ flat.style.transform=`rotateY(${(32-flatten*32).toFixed(2)}deg) rotateZ(${(10-flatten*10).toFixed(2)}deg) scale(${(.85+flatten*.15).toFixed(3)})`;
+ flat.style.opacity=String(clamp(flatten*1.35));
+ if(stage)stage.style.transform=`scale(${(1+s*.14).toFixed(3)}) rotate(${(s*23).toFixed(1)}deg)`;
+ }
+ last=y;
 }
-updateOffer();
-setInterval(updateOffer,1000);
-
-const buyLinks=$$('[data-buy]');
-function resolveCheckout(){
-  updateOffer();
-  const url=active?window.POSTSIGNAL_PROMO_CHECKOUT_URL:window.POSTSIGNAL_CHECKOUT_URL;
-  if(url && /^https:\/\//.test(url)) return url;
-  const subject=encodeURIComponent(pl?'Zakup ebooka PostSignal':'PostSignal ebook purchase');
-  const body=encodeURIComponent((pl?'Proszę o link do zakupu dla: ':'Please send a checkout link for: ')+'How to Turn Your Beauty Content Into More Bookings — '+(active?'$9.99':'$14.99'));
-  return `mailto:contact@postsignal.eu?subject=${subject}&body=${body}`;
-}
-buyLinks.forEach(link=>link.addEventListener('click',e=>{
-  const href=link.getAttribute('href')||'';
-  if(href.startsWith('#')) return;
-  e.preventDefault();
-  location.href=resolveCheckout();
-}));
-
-const scrollLine=document.querySelector('.scroll-line');
-const stickyBuy=document.querySelector('[data-sticky-buybar]');
-const revealEls=$$('[data-reveal]');
-if('IntersectionObserver' in window){
-  const io=new IntersectionObserver(entries=>entries.forEach(entry=>{
-    if(entry.isIntersecting){entry.target.classList.add('visible');io.unobserve(entry.target);}
-  }),{threshold:.12});
-  revealEls.forEach(el=>io.observe(el));
-}else revealEls.forEach(el=>el.classList.add('visible'));
-
-const showcase=document.querySelector('.scroll-showcase');
-const panels=$$('.scene-panel');
-const sceneBook=document.querySelector('.scene-book');
-const sceneCover=document.querySelector('.scene-cover');
-const sceneNumber=document.querySelector('[data-scene-number]');
-const heroStage=document.querySelector('.hero-stage');
-const heroBook=document.querySelector('.hero-book');
-const heroBg=document.querySelector('.hero-bg');
-let raf=0;
-function clamp(min,max,v){return Math.max(min,Math.min(max,v));}
-function render(){
-  raf=0;
-  const total=document.documentElement.scrollHeight - innerHeight;
-  if(scrollLine) scrollLine.style.transform=`scaleX(${total>0?scrollY/total:0})`;
-  if(stickyBuy){ stickyBuy.classList.toggle('is-visible', scrollY > innerHeight*0.55); }
-
-  if(heroBook && !reduce){
-    const heroRect=heroStage.getBoundingClientRect();
-    const heroProgress=clamp(-1,1,(innerHeight*0.5 - heroRect.top)/(innerHeight*1.2));
-    heroBook.style.transform=`translate3d(0, ${heroProgress*-18}px, 0) rotateY(${heroProgress*16}deg) rotateX(${heroProgress*-5}deg)`;
-    if(heroBg) heroBg.style.transform=`scale(${1 + Math.abs(heroProgress)*0.03}) translateY(${heroProgress*10}px)`;
-  }
-
-  if(showcase && sceneBook && sceneCover){
-    const rect=showcase.getBoundingClientRect();
-    const max=Math.max(1, showcase.offsetHeight - innerHeight);
-    const t=clamp(0,1,-rect.top/max);
-    const scene=Math.min(2, Math.floor(t*3));
-    panels.forEach((panel,i)=>panel.classList.toggle('is-active', i===scene));
-    if(sceneNumber) sceneNumber.textContent=String(scene+1).padStart(2,'0');
-    if(!reduce){
-      const a=clamp(0,1,t*2.1);
-      const b=clamp(0,1,(t-.34)*2.6);
-      const c=clamp(0,1,(t-.68)*3.2);
-      sceneBook.style.transform=`translate3d(${a*4-b*8}%, ${-a*4+b*7}%,0) rotateY(${-18-a*18+b*44}deg) rotateX(${-2+a*5}deg) rotateZ(${-8+a*7+b*8}deg) scale(${1-a*.06-b*.11})`;
-      sceneBook.style.opacity=String(1-c*.92);
-      sceneCover.style.opacity=String(clamp(0,1,b*1.15+c*.3));
-      sceneCover.style.transform=`translate3d(${12-b*12}%, ${20-b*22+c*8}px,0) rotateY(${42-b*42}deg) rotateZ(${-10+b*10}deg) scale(${.73+b*.27})`;
-    }
-  }
-}
-function onScroll(){ if(!raf) raf=requestAnimationFrame(render); }
-addEventListener('scroll', onScroll, {passive:true});
-addEventListener('resize', onScroll, {passive:true});
-render();
-
-if(!reduce && matchMedia('(pointer:fine)').matches && heroStage && heroBook){
-  heroStage.addEventListener('pointermove',e=>{
-    const r=heroStage.getBoundingClientRect();
-    const x=(e.clientX-r.left)/r.width-.5;
-    const y=(e.clientY-r.top)/r.height-.5;
-    heroBook.style.transition='transform .12s ease-out';
-    heroBook.style.transform=`translate3d(${x*14}px, ${y*10}px, 0) rotateY(${x*18}deg) rotateX(${-y*12}deg)`;
-  });
-  heroStage.addEventListener('pointerleave',()=>{ heroBook.style.transition='transform .25s ease-out'; onScroll(); });
-}
+function queue(){if(!raf)raf=requestAnimationFrame(draw)}
+addEventListener('scroll',queue,{passive:true});addEventListener('resize',queue,{passive:true});addEventListener('pageshow',()=>{offer();queue()});queue();
 })();
