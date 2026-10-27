@@ -26,3 +26,33 @@ if(book&&stage&&!reduced){
 const progress=q('.progress-line'),float=q('#floating-purchase'),order=q('#order');let queued=false;function scrollTick(){queued=false;const height=document.documentElement.scrollHeight-innerHeight;if(progress)progress.style.transform=`scaleX(${height?scrollY/height:0})`;if(float&&order){const rect=order.getBoundingClientRect();float.classList.toggle('is-visible',scrollY>innerHeight*.75&&!(rect.top<innerHeight*.72&&rect.bottom>0));}}
 function queue(){if(!queued){queued=true;requestAnimationFrame(scrollTick)}}addEventListener('scroll',queue,{passive:true});addEventListener('resize',queue,{passive:true});queue();
 })();
+
+/* V12 interactive conversion demonstrations */
+(()=>{
+const pl=document.documentElement.lang==='pl';
+const examples=Array.from(document.querySelectorAll('[data-example]'));
+const caption=document.querySelector('[data-post-caption]'),action=document.querySelector('[data-post-cta]'),insight=document.querySelector('[data-post-insight]');
+const samples=pl?{
+ before:['Świeży glow ✨ Uwielbiam ten efekt! #beauty #skincare #selfcare','Ładny post — i tyle','Pokazuje efekt, ale nie daje potencjalnej klientce jasnego powodu, by wykonała kolejny krok.'],
+ after:['Masz wrażenie, że Twoja skóra wygląda na zmęczoną mimo codziennej pielęgnacji? ✨ Zobacz, jak dobieramy zabieg do potrzeb cery i czego możesz się spodziewać podczas wizyty. Napisz „KONSULTACJA”, jeśli chcesz omówić opcje.','Jasne CTA: zapytaj o konsultację','Pokazuje problem klientki, tłumaczy wartość usługi i daje prosty następny krok.']
+}:{
+ before:['Fresh glow ✨ Loving this result! #beauty #skincare #selfcare','Just another pretty post','It shows the result, but gives a potential client little reason to take the next step.'],
+ after:['Skin looking tired even when you keep up with your routine? ✨ See how we tailor a treatment to your skin goals, what a consultation looks like, and what to expect. DM “CONSULT” to talk through your options.','Clear CTA: ask about a consultation','It connects a client problem to your expertise, then makes the next step unmistakable.']
+};
+examples.forEach(btn=>btn.addEventListener('click',()=>{const key=btn.dataset.example;examples.forEach(x=>{const on=x===btn;x.classList.toggle('is-active',on);x.setAttribute('aria-pressed',String(on))});[caption,action,insight].forEach((el,i)=>{if(el)el.textContent=samples[key][i]})}));
+const flow=Array.from(document.querySelectorAll('[data-flow]'));
+const data=pl?[
+ ['✦','Odpowiedz na konkretną potrzebę.','Zacznij od problemu, z którym klientka już się mierzy — nie tylko od nazwy zabiegu.','Wniosek: „To dotyczy mojego problemu”.'],
+ ['◎','Pokaż, dlaczego warto Ci zaufać.','Pokaż przebieg wizyty, kompetencje, realne efekty i informacje, które rozwiewają wątpliwości.','Wniosek: „Wiem, czego mogę się spodziewać”.'],
+ ['↗','Poprowadź do jednego działania.','Zaproś do konkretnego kroku: rezerwacji, konsultacji lub zapytania o wolny termin.','Wniosek: „Wiem, jak umówić wizytę”.']
+]:[
+ ['✦','Speak to a real client problem.','Lead with the concern your ideal client already has — not just the name of the treatment.','Takeaway: “This speaks to my problem.”'],
+ ['◎','Show them why they can trust you.','Use real process details, expertise and useful reassurance to make your service less of an unknown.','Takeaway: “I know what to expect.”'],
+ ['↗','Make one next action clear.','Invite one specific action: book, ask a question or enquire about a consultation.','Takeaway: “I know how to book.”']
+];
+const fields=['[data-flow-icon]','[data-flow-title]','[data-flow-copy]','[data-flow-takeaway]'].map(s=>document.querySelector(s));
+const idx=document.querySelector('[data-flow-index]');
+function activate(i){flow.forEach((btn,j)=>{const on=i===j;btn.classList.toggle('is-active',on);btn.setAttribute('aria-selected',String(on));btn.tabIndex=on?0:-1});fields.forEach((el,j)=>{if(el)el.textContent=data[i][j]});if(idx)idx.textContent=String(i+1).padStart(2,'0')}
+flow.forEach((btn,i)=>{btn.addEventListener('click',()=>activate(i));btn.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowRight'||e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();const next=(i+(e.key==='ArrowDown'||e.key==='ArrowRight'?1:flow.length-1))%flow.length;activate(next);flow[next].focus()}})});
+const next=document.querySelector('[data-flow-next]');if(next)next.addEventListener('click',()=>{const curr=flow.findIndex(x=>x.classList.contains('is-active'));activate((curr+1)%flow.length)});
+})();
